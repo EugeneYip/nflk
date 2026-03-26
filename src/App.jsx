@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const PALETTE = {
   bg: "#FCFAF2",
@@ -89,6 +90,10 @@ const ICONS = {
   spark: { viewBox: "0 0 24 24", paths: [
     { d: "M12 4.5 13.65 8.35 17.5 10l-3.85 1.65L12 15.5l-1.65-3.85L6.5 10l3.85-1.65L12 4.5Z", fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinejoin: "round" },
     { d: "M18.5 3.5v2M18.5 8.5v2M16 6h2M19 6h2", fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round" },
+  ]},
+  globe: { viewBox: "0 0 24 24", paths: [
+    { d: "M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z", fill: "none", stroke: "currentColor", strokeWidth: 1.6 },
+    { d: "M4.5 12h15M12 4.1c2.05 2.12 3.2 4.97 3.2 7.9S14.05 17.78 12 19.9M12 4.1C9.95 6.22 8.8 9.07 8.8 12S9.95 17.78 12 19.9", fill: "none", stroke: "currentColor", strokeWidth: 1.55, strokeLinecap: "round", strokeLinejoin: "round" },
   ]},
 };
 
@@ -541,6 +546,7 @@ function StatCard({ item, mode }) {
           <TextBlock copy={item.label} mode={mode} className="mt-1 text-sm leading-6 text-[#5B5148]" zhClassName="border-[#E3D8C8] text-[#695E55]" />
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -555,6 +561,7 @@ function BoundaryCard({ item, mode }) {
           <TextBlock copy={item.body} mode={mode} className="text-sm leading-7 text-[#514840]" zhClassName="border-[#E3D8C8] text-[#62574E]" />
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -570,6 +577,7 @@ function DecisionItem({ item, mode }) {
           <TextBlock copy={item.body} mode={mode} className="text-[15px] leading-7 text-[#433B34]" zhClassName="border-[#DDD2C2] text-[#5B5148]" />
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -586,6 +594,7 @@ function TimelineRow({ item, mode }) {
         <div className="mb-2 text-base font-semibold text-[#2C2824]">{mode === "en" ? item.rightTitle.en : mode === "zh" ? item.rightTitle.zh : item.rightTitle.en}</div>
         <TextBlock copy={item.rightBody} mode={mode} className="text-sm leading-7 text-[#4E453D]" zhClassName="border-[#D7DEE5] text-[#5E544B]" />
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -617,6 +626,7 @@ function CompareCard({ item, mode }) {
           <TextBlock copy={item.limit} mode={mode} className="text-sm leading-7 text-[#664A42]" zhClassName="border-[#E8D4CE] text-[#74564C]" />
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -631,6 +641,7 @@ function PersonCard({ item, mode }) {
           <TextBlock copy={item.role} mode={mode} className="text-sm leading-7 text-[#4D453E]" zhClassName="border-[#DDD2C2] text-[#5E544B]" />
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -656,6 +667,7 @@ function CampaignCard({ item, mode }) {
           </div>
         ))}
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -752,6 +764,7 @@ function ExhibitCard({ item, mode }) {
           <TextBlock copy={item.caption} mode={mode} className="text-sm leading-7 text-[#4B433C]" zhClassName="border-[#DDD2C2] text-[#5E544B]" />
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -802,6 +815,7 @@ function GovernmentTable({ mode }) {
           </div>
         ))}
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -815,6 +829,7 @@ function MissedPoint({ item, mode }) {
           <div className="space-y-2"><div className="text-sm leading-7 text-[#433B34]">{item.en}</div><div className="border-l-2 border-[#DDD2C2] pl-3 text-sm leading-7 text-[#5D534A]">{item.zh}</div></div>
         ) : <div className="text-sm leading-7 text-[#433B34]">{mode === "en" ? item.en : item.zh}</div>}
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -874,9 +889,76 @@ function MobileJumpNav({ items, activeId, onClick, mode }) {
           );
         })}
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
+
+function FloatingLanguageDock({ mode, setMode, open, setOpen, dockRef, buttons }) {
+  const currentLabel = mode === "en" ? "EN" : mode === "zh" ? "中文" : "EN / 中文";
+  const helper =
+    mode === "zh"
+      ? "語言"
+      : mode === "en"
+        ? "Language"
+        : "Language · 語言";
+
+  return (
+    <div ref={dockRef} className="fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5">
+      <div className={`absolute bottom-[calc(100%+10px)] right-0 w-[188px] origin-bottom-right transition ${open ? "pointer-events-auto translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-2 scale-95 opacity-0"}`}>
+        <div className="rounded-[22px] border border-[#DED2C2] bg-[rgba(255,253,248,0.96)] p-2 shadow-[0_18px_35px_rgba(43,38,33,0.14)] backdrop-blur-md">
+          <div className="mb-1.5 px-2 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">
+            {helper}
+          </div>
+          <div className="space-y-1">
+            {buttons.map((btn) => {
+              const active = mode === btn.key;
+              return (
+                <button
+                  key={btn.key}
+                  onClick={() => {
+                    setMode(btn.key);
+                    setOpen(false);
+                  }}
+                  className={`flex w-full items-center justify-between rounded-2xl px-3 py-2.5 text-left text-sm font-semibold transition ${
+                    active
+                      ? "bg-[#2F5168] text-white shadow-sm"
+                      : "text-[#5C5248] hover:bg-[#F5EFE4]"
+                  }`}
+                >
+                  <span>{btn.label}</span>
+                  <span className={`h-2 w-2 rounded-full ${active ? "bg-white" : "bg-[#D5C8B8]"}`} />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <button
+        onClick={() => setOpen((value) => !value)}
+        aria-label={helper}
+        aria-expanded={open}
+        className={`group flex h-12 items-center gap-2 rounded-full border px-3 shadow-[0_14px_30px_rgba(43,38,33,0.12)] backdrop-blur-md transition ${
+          open
+            ? "border-[#2F5168] bg-[#2F5168] text-white"
+            : "border-[#DDD1C1] bg-[rgba(255,253,248,0.88)] text-[#4D443B] hover:border-[#C8B8A3] hover:bg-[rgba(255,253,248,0.96)]"
+        }`}
+      >
+        <div className={`flex h-8 w-8 items-center justify-center rounded-full ${open ? "bg-white/14" : "bg-[#F3EDE2]"}`}>
+          <Icon name="globe" size={16} />
+        </div>
+        <div className="hidden min-w-[50px] text-left sm:block">
+          <div className={`text-[9px] font-semibold uppercase tracking-[0.18em] ${open ? "text-white/70" : "text-[#8A7C6F]"}`}>
+            Lang
+          </div>
+          <div className="text-xs font-semibold leading-4">{currentLabel}</div>
+        </div>
+      </button>
+    </div>
+  );
+}
+
 
 function RailSummary({ activeId, mode }) {
   const label = SECTION_LABELS[activeId] || SECTION_LABELS.overview;
@@ -888,6 +970,7 @@ function RailSummary({ activeId, mode }) {
       <div className="mt-3">
         <TextBlock copy={note} mode={mode} className="text-sm leading-7 text-[#5B5148]" zhClassName="border-[#DDD2C2] text-[#675D54]" />
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -904,6 +987,7 @@ function ReadingPathCard({ mode }) {
           </div>
         ))}
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -951,6 +1035,7 @@ function CampaignScoreboard({ mode }) {
           </div>
         ))}
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -1044,6 +1129,7 @@ function StickySummaryStrip({ activeId, mode, navItems }) {
           </div>
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -1051,7 +1137,50 @@ function StickySummaryStrip({ activeId, mode, navItems }) {
 export default function NFLKCaseInfrastructure() {
   const [mode, setMode] = useState("en");
   const [activeId, setActiveId] = useState("overview");
+  const [langOpen, setLangOpen] = useState(false);
+  const dockRef = useRef(null);
   const navItems = useMemo(() => Object.entries(SECTION_LABELS).map(([id, label], index) => ({ id, label, index: index + 1 })), []);
+
+  useEffect(() => {
+    try {
+      const savedMode = window.localStorage.getItem("nflk-case-mode");
+      if (savedMode && ["en", "zh", "bi"].includes(savedMode)) {
+        setMode(savedMode);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem("nflk-case-mode", mode);
+    } catch {}
+  }, [mode]);
+
+  useEffect(() => {
+    if (!langOpen) return;
+
+    const handlePointerDown = (event) => {
+      if (dockRef.current && !dockRef.current.contains(event.target)) {
+        setLangOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setLangOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown, { passive: true });
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [langOpen]);
 
   useEffect(() => {
     const ids = navItems.map((item) => item.id);
@@ -1079,6 +1208,7 @@ export default function NFLKCaseInfrastructure() {
     const el = document.getElementById(id);
     if (el) {
       setActiveId(id);
+      setLangOpen(false);
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
@@ -1101,18 +1231,7 @@ export default function NFLKCaseInfrastructure() {
                   <div className="rounded-xl bg-[#F4EEE3] p-2 text-[#745F4C]"><Icon name="menu" size={18} /></div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">NFLK</div>
-                    <div className="text-sm text-[#5F554B]">Case infrastructure v4</div>
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-[#E7DDCF] bg-[#FFFCF7] p-3">
-                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7C6C5D]">Language</div>
-                  <div className="grid grid-cols-3 gap-2">
-                    {langButtons.map((btn) => {
-                      const active = mode === btn.key;
-                      return (
-                        <button key={btn.key} onClick={() => setMode(btn.key)} className={`rounded-xl px-2 py-2 text-xs font-semibold transition ${active ? "bg-[#2F5168] text-white shadow-sm" : "bg-white text-[#64594F] hover:bg-[#F5EFE4]"}`}>{btn.label}</button>
-                      );
-                    })}
+                    <div className="text-sm text-[#5F554B]">Case infrastructure v5</div>
                   </div>
                 </div>
                 <RailSummary activeId={activeId} mode={mode} />
@@ -1177,7 +1296,7 @@ export default function NFLKCaseInfrastructure() {
           </div>
         </div>
       </div>
+      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
-
