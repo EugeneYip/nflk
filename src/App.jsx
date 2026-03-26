@@ -1,3 +1,4 @@
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const PALETTE = {
@@ -537,7 +538,7 @@ function StatCard({ item, mode }) {
   const soft = item.color === "green" ? PALETTE.greenSoft : item.color === "amber" ? PALETTE.amberSoft : item.color === "rust" ? PALETTE.rustSoft : item.color === "plum" ? PALETTE.plumSoft : PALETTE.blueSoft;
   const strong = item.color === "green" ? PALETTE.green : item.color === "amber" ? PALETTE.amber : item.color === "rust" ? PALETTE.rust : item.color === "plum" ? PALETTE.plum : PALETTE.blue;
   return (
-    <div className="rounded-2xl border border-[#E4DACB] bg-white/80 p-4 shadow-[0_8px_30px_rgba(43,38,33,0.05)]">
+    <div className="rounded-[24px] border border-[#E6DCCD] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,252,246,0.96))] p-4 shadow-[0_14px_36px_rgba(43,38,33,0.06)] transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(43,38,33,0.08)]">
       <div className="flex items-start gap-3">
         <div className="rounded-xl p-2" style={{ backgroundColor: soft, color: strong }}><Icon name={item.icon} size={18} /></div>
         <div>
@@ -551,7 +552,7 @@ function StatCard({ item, mode }) {
 
 function BoundaryCard({ item, mode }) {
   return (
-    <div className="rounded-2xl border border-[#E3D8C8] bg-white p-5">
+    <div className="rounded-[24px] border border-[#E5DACC] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF7)] p-5 shadow-[0_10px_28px_rgba(43,38,33,0.035)]">
       <div className="flex items-start gap-3">
         <div className="mt-1 rounded-xl bg-[#F6F1E7] p-2 text-[#7A6653]"><Icon name={item.icon} size={18} /></div>
         <div className="space-y-2">
@@ -566,7 +567,7 @@ function BoundaryCard({ item, mode }) {
 function DecisionItem({ item, mode }) {
   const positive = item.icon === "check";
   return (
-    <div className="rounded-2xl border border-[#E4D9CB] bg-white p-5">
+    <div className="rounded-[24px] border border-[#E5D9CB] bg-[linear-gradient(180deg,#FFFFFF,#FFFBF5)] p-5 shadow-[0_12px_30px_rgba(43,38,33,0.045)]">
       <div className="flex items-start gap-3">
         <div className={`rounded-xl p-2 ${positive ? "bg-[#EDF3EC] text-[#5B6D5B]" : "bg-[#F8EEE8] text-[#B35C44]"}`}><Icon name={item.icon} size={18} /></div>
         <div className="space-y-2">
@@ -580,7 +581,7 @@ function DecisionItem({ item, mode }) {
 
 function TimelineRow({ item, mode }) {
   return (
-    <div className="grid gap-4 rounded-[28px] border border-[#E2D8CA] bg-white p-5 md:grid-cols-[100px_1fr_1fr] md:p-6">
+    <div className="grid gap-4 rounded-[30px] border border-[#E4D9CB] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF8)] p-5 shadow-[0_12px_30px_rgba(43,38,33,0.04)] md:grid-cols-[104px_1fr_1fr] md:p-6">
       <div className="text-sm font-semibold tracking-[0.14em] text-[#7A6B5D] md:pt-1">{item.year}</div>
       <div className="rounded-2xl bg-[#FBF7EF] p-4">
         <div className="mb-2 text-base font-semibold text-[#2C2824]">{mode === "en" ? item.leftTitle.en : mode === "zh" ? item.leftTitle.zh : item.leftTitle.en}</div>
@@ -597,7 +598,7 @@ function TimelineRow({ item, mode }) {
 function FlowCard({ item, mode, last }) {
   return (
     <div className="relative flex-1">
-      <div className="h-full rounded-2xl border border-[#E4DACB] bg-white p-5">
+      <div className="h-full rounded-[24px] border border-[#E5DACA] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF7)] p-5 shadow-[0_10px_28px_rgba(43,38,33,0.035)]">
         <div className="mb-3 inline-flex rounded-xl bg-[#F5EFE4] p-2 text-[#7B6854]"><Icon name={item.icon} size={18} /></div>
         <div className="mb-2 text-base font-semibold text-[#241F1A]">{mode === "en" ? item.title.en : mode === "zh" ? item.title.zh : item.title.en}</div>
         <TextBlock copy={item.body} mode={mode} className="text-sm leading-7 text-[#4D453E]" zhClassName="border-[#E1D6C7] text-[#5E544B]" />
@@ -609,7 +610,7 @@ function FlowCard({ item, mode, last }) {
 
 function CompareCard({ item, mode }) {
   return (
-    <div className="rounded-2xl border border-[#E4DACB] bg-white p-5">
+    <div className="rounded-[24px] border border-[#E5DACA] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF7)] p-5 shadow-[0_10px_28px_rgba(43,38,33,0.035)]">
       <div className="mb-3 text-base font-semibold text-[#241F1A]">{mode === "en" ? item.name.en : mode === "zh" ? item.name.zh : item.name.en}</div>
       <div className="space-y-3">
         <div className="rounded-xl bg-[#EEF5EE] p-3">
@@ -627,7 +628,7 @@ function CompareCard({ item, mode }) {
 
 function PersonCard({ item, mode }) {
   return (
-    <div className="rounded-2xl border border-[#E3D8C8] bg-white p-5">
+    <div className="rounded-[24px] border border-[#E5DACC] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF7)] p-5 shadow-[0_10px_28px_rgba(43,38,33,0.035)]">
       <div className="flex items-start gap-3">
         <div className="rounded-xl bg-[#F6F0E7] p-2 text-[#7A6956]"><Icon name={item.icon} size={18} /></div>
         <div>
@@ -650,7 +651,7 @@ function CampaignCard({ item, mode }) {
     { label: { en: "Limit", zh: "限制" }, value: item.limit },
   ];
   return (
-    <div className="overflow-hidden rounded-[28px] border border-[#E3D8C8] bg-white">
+    <div className="overflow-hidden rounded-[30px] border border-[#E4D9CB] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF8)] shadow-[0_12px_32px_rgba(43,38,33,0.04)]">
       <div className="px-5 py-4" style={{ backgroundColor: soft }}><div className="text-lg font-semibold" style={{ color: strong }}>{mode === "en" ? item.title.en : mode === "zh" ? item.title.zh : item.title.en}</div></div>
       <div className="divide-y divide-[#EFE7DC]">
         {rows.map((row, idx) => (
@@ -736,7 +737,7 @@ function ExhibitCard({ item, mode }) {
   const soft = item.tone === "green" ? PALETTE.greenSoft : item.tone === "amber" ? PALETTE.amberSoft : item.tone === "rust" ? PALETTE.rustSoft : item.tone === "plum" ? PALETTE.plumSoft : PALETTE.blueSoft;
   const strong = item.tone === "green" ? PALETTE.green : item.tone === "amber" ? PALETTE.amber : item.tone === "rust" ? PALETTE.rust : item.tone === "plum" ? PALETTE.plum : PALETTE.blue;
   return (
-    <div className="overflow-hidden rounded-[28px] border border-[#E3D8C8] bg-white shadow-[0_10px_24px_rgba(43,38,33,0.04)]">
+    <div className="overflow-hidden rounded-[30px] border border-[#E4D9CB] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF8)] shadow-[0_16px_34px_rgba(43,38,33,0.05)]">
       <div className="border-b border-[#EEE4D8] px-4 py-4 sm:px-5" style={{ backgroundColor: soft }}>
         <div className="mb-3 flex items-center justify-between gap-3">
           <DualLabel en={item.title.en} zh={item.title.zh} mode={mode} className="text-base font-semibold text-[#241F1A]" zhClassName="text-sm text-[#75685B]" />
@@ -779,7 +780,7 @@ function MediaCard({ item, mode }) {
   const soft = item.color === "green" ? PALETTE.greenSoft : item.color === "rust" ? PALETTE.rustSoft : PALETTE.blueSoft;
   const strong = item.color === "green" ? PALETTE.green : item.color === "rust" ? PALETTE.rust : PALETTE.blue;
   return (
-    <div className="rounded-2xl border border-[#E4DACB] bg-white p-5">
+    <div className="rounded-[24px] border border-[#E5DACA] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF7)] p-5 shadow-[0_10px_28px_rgba(43,38,33,0.035)]">
       <div className="mb-4 inline-flex rounded-xl px-3 py-1.5 text-sm font-semibold" style={{ backgroundColor: soft, color: strong }}>{mode === "en" ? item.title.en : mode === "zh" ? item.title.zh : item.title.en}</div>
       <BulletList items={item.bullets} mode={mode} />
     </div>
@@ -827,7 +828,7 @@ function StrategyCard({ item, mode }) {
   const soft = item.tone === "green" ? PALETTE.greenSoft : item.tone === "amber" ? PALETTE.amberSoft : item.tone === "rust" ? PALETTE.rustSoft : item.tone === "plum" ? PALETTE.plumSoft : PALETTE.blueSoft;
   const strong = item.tone === "green" ? PALETTE.green : item.tone === "amber" ? PALETTE.amber : item.tone === "rust" ? PALETTE.rust : item.tone === "plum" ? PALETTE.plum : PALETTE.blue;
   return (
-    <div className="rounded-2xl border border-[#E4DACB] bg-white p-5">
+    <div className="rounded-[24px] border border-[#E5DACA] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF7)] p-5 shadow-[0_10px_28px_rgba(43,38,33,0.035)]">
       <div className="mb-3 flex items-start gap-3"><div className="rounded-xl p-2" style={{ backgroundColor: soft, color: strong }}><Icon name={item.icon} size={18} /></div><div className="text-base font-semibold text-[#241F1A]">{mode === "en" ? item.title.en : mode === "zh" ? item.title.zh : item.title.en}</div></div>
       <TextBlock copy={item.body} mode={mode} className="text-sm leading-7 text-[#4A423A]" zhClassName="border-[#DDD2C2] text-[#5B5148]" />
     </div>
@@ -837,7 +838,7 @@ function StrategyCard({ item, mode }) {
 function NavItem({ id, label, activeId, onClick, mode }) {
   const active = activeId === id;
   return (
-    <button onClick={() => onClick(id)} className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition ${active ? "bg-[#2F5168] text-white shadow-sm" : "text-[#5D5349] hover:bg-[#F6F0E6]"}`}>
+    <button onClick={() => onClick(id)} className={`group flex w-full items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left text-sm transition ${active ? "border-[#2F5168] bg-[#2F5168] text-white shadow-[0_10px_22px_rgba(47,81,104,0.18)]" : "border-transparent text-[#5D5349] hover:border-[#E2D6C7] hover:bg-[#F8F3EA]"}`}>
       {mode === "bi" ? (
         <div className="space-y-0.5">
           <div className="font-medium leading-5">{label.en}</div>
@@ -846,7 +847,7 @@ function NavItem({ id, label, activeId, onClick, mode }) {
       ) : (
         <span>{mode === "en" ? label.en : label.zh}</span>
       )}
-      <Icon name="arrowRight" size={15} className={active ? "opacity-90" : "opacity-50"} />
+      <Icon name="arrowRight" size={15} className={active ? "translate-x-0 opacity-90" : "opacity-40 transition group-hover:translate-x-0.5 group-hover:opacity-70"} />
     </button>
   );
 }
@@ -855,7 +856,7 @@ function NavItem({ id, label, activeId, onClick, mode }) {
 function SectionMapCard({ item, mode, activeId, onClick }) {
   const active = item.id === activeId;
   return (
-    <button onClick={() => onClick(item.id)} className={`rounded-2xl border p-4 text-left transition ${active ? "border-[#2F5168] bg-[#F4F8FB] shadow-sm" : "border-[#E5DACA] bg-white hover:border-[#CBBBA6] hover:bg-[#FFFCF7]"}`}>
+    <button onClick={() => onClick(item.id)} className={`rounded-[24px] border p-4 text-left transition ${active ? "border-[#2F5168] bg-[#F4F8FB] shadow-[0_10px_22px_rgba(58,95,118,0.10)]" : "border-[#E5DACA] bg-[linear-gradient(180deg,#FFFFFF,#FFFCF7)] hover:border-[#CBBBA6] hover:bg-[#FFFCF7] hover:shadow-[0_8px_20px_rgba(43,38,33,0.04)]"}`}>
       <div className="mb-2 flex items-center justify-between gap-3">
         <DualLabel en={item.label.en} zh={item.label.zh} mode={mode} className="text-sm font-semibold text-[#241F1A]" zhClassName="text-xs text-[#7C6E61]" />
         <div className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${active ? "bg-[#2F5168] text-white" : "bg-[#F5EFE4] text-[#7A6C5D]"}`}>{String(item.index).padStart(2, "0")}</div>
@@ -894,7 +895,7 @@ function FloatingLanguageDock({ mode, setMode, open, setOpen, dockRef, buttons }
   return (
     <div ref={dockRef} className="fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5">
       <div className={`absolute bottom-[calc(100%+10px)] right-0 w-[188px] origin-bottom-right transition ${open ? "pointer-events-auto translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-2 scale-95 opacity-0"}`}>
-        <div className="rounded-[22px] border border-[#DED2C2] bg-[rgba(255,253,248,0.96)] p-2 shadow-[0_18px_35px_rgba(43,38,33,0.14)] backdrop-blur-md">
+        <div className="rounded-[22px] border border-[#DED2C2] bg-[rgba(255,253,248,0.94)] p-2 shadow-[0_18px_35px_rgba(43,38,33,0.12)] backdrop-blur-xl">
           <div className="mb-1.5 px-2 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">
             {helper}
           </div>
@@ -927,7 +928,7 @@ function FloatingLanguageDock({ mode, setMode, open, setOpen, dockRef, buttons }
         onClick={() => setOpen((value) => !value)}
         aria-label={helper}
         aria-expanded={open}
-        className={`group flex h-12 items-center gap-2 rounded-full border px-3 shadow-[0_14px_30px_rgba(43,38,33,0.12)] backdrop-blur-md transition ${
+        className={`group flex h-10 items-center gap-2 rounded-full border px-2.5 shadow-[0_12px_24px_rgba(43,38,33,0.10)] backdrop-blur-xl transition ${
           open
             ? "border-[#2F5168] bg-[#2F5168] text-white"
             : "border-[#DDD1C1] bg-[rgba(255,253,248,0.88)] text-[#4D443B] hover:border-[#C8B8A3] hover:bg-[rgba(255,253,248,0.96)]"
@@ -936,7 +937,7 @@ function FloatingLanguageDock({ mode, setMode, open, setOpen, dockRef, buttons }
         <div className={`flex h-8 w-8 items-center justify-center rounded-full ${open ? "bg-white/14" : "bg-[#F3EDE2]"}`}>
           <Icon name="globe" size={16} />
         </div>
-        <div className="hidden min-w-[50px] text-left sm:block">
+        <div className="hidden min-w-[46px] text-left sm:block">
           <div className={`text-[9px] font-semibold uppercase tracking-[0.18em] ${open ? "text-white/70" : "text-[#8A7C6F]"}`}>
             Lang
           </div>
@@ -952,7 +953,7 @@ function RailSummary({ activeId, mode }) {
   const label = SECTION_LABELS[activeId] || SECTION_LABELS.overview;
   const note = SECTION_NOTES[activeId] || SECTION_NOTES.overview;
   return (
-    <div className="rounded-2xl border border-[#E7DDCF] bg-[#FFFCF7] p-4">
+    <div className="rounded-[24px] border border-[#E7DDCF] bg-[linear-gradient(180deg,#FFFEFA,#FBF6ED)] p-4 shadow-[0_8px_22px_rgba(43,38,33,0.035)]">
       <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7C6C5D]">{mode === "zh" ? "目前區段" : mode === "en" ? "Current section" : "Current section · 目前區段"}</div>
       <DualLabel en={label.en} zh={label.zh} mode={mode} className="text-base font-semibold text-[#241F1A]" zhClassName="text-sm text-[#75685B]" />
       <div className="mt-3">
@@ -964,7 +965,7 @@ function RailSummary({ activeId, mode }) {
 
 function ReadingPathCard({ mode }) {
   return (
-    <div className="rounded-2xl border border-[#E7DDCF] bg-[#FBF7EF] p-4">
+    <div className="rounded-[24px] border border-[#E7DDCF] bg-[linear-gradient(180deg,#FCF8F0,#F8F1E5)] p-4 shadow-[0_8px_22px_rgba(43,38,33,0.035)]">
       <div className="mb-3 text-sm font-semibold text-[#2B2621]">{mode === "zh" ? "建議閱讀路徑" : mode === "en" ? "Suggested reading path" : "Suggested reading path · 建議閱讀路徑"}</div>
       <div className="space-y-3">
         {READING_PATH.map((item, idx) => (
@@ -1079,11 +1080,11 @@ function StickySummaryStrip({ activeId, mode, navItems }) {
 
   return (
     <div className="sticky top-3 z-30 mb-8">
-      <div className="overflow-hidden rounded-[24px] border border-[#DCCFBE] bg-[rgba(255,252,246,0.92)] shadow-[0_16px_40px_rgba(43,38,33,0.08)] backdrop-blur">
+      <div className="overflow-hidden rounded-[24px] border border-[#DCCFBE] bg-[linear-gradient(180deg,rgba(255,253,248,0.95),rgba(252,246,236,0.93))] shadow-[0_18px_42px_rgba(43,38,33,0.09)] backdrop-blur-xl">
         <div className="h-1.5 w-full bg-[#EFE6D8]">
           <div className="h-full rounded-r-full bg-[#3A5F76] transition-all duration-300" style={{ width: progressWidth }} />
         </div>
-        <div className="grid gap-4 p-4 md:p-5 xl:grid-cols-[0.95fr_0.8fr_1.15fr]">
+        <div className="grid gap-4 p-4 md:p-5 xl:grid-cols-[0.92fr_0.78fr_1.18fr]">
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#786B5F]">
               <Icon name="layers" size={14} />
@@ -1204,18 +1205,21 @@ export default function NFLKCaseInfrastructure() {
   ];
 
   return (
-    <div className="min-h-screen w-full" style={{ backgroundColor: PALETTE.bg, color: PALETTE.ink }}>
-      <div className="mx-auto max-w-[1660px] px-4 pb-16 pt-6 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[32px] border border-[#E0D5C6] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,251,245,0.96))] shadow-[0_20px_60px_rgba(43,38,33,0.06)]">
-          <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top_left,rgba(58,95,118,0.16),transparent_35%),radial-gradient(circle_at_top_right,rgba(181,138,67,0.14),transparent_35%)]" />
+    <div className="relative isolate min-h-screen w-full overflow-x-clip" style={{ backgroundColor: PALETTE.bg, color: PALETTE.ink }}>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(58,95,118,0.10),transparent_28%),radial-gradient(circle_at_top_right,rgba(181,138,67,0.10),transparent_26%),linear-gradient(180deg,rgba(252,250,242,1),rgba(248,244,235,0.96))]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(circle_at_20%_10%,rgba(110,88,115,0.08),transparent_24%),radial-gradient(circle_at_80%_0%,rgba(58,95,118,0.08),transparent_22%)]" />
+      <div className="relative mx-auto max-w-[1660px] px-4 pb-20 pt-7 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[36px] border border-[#E0D5C6] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,251,245,0.95))] shadow-[0_24px_70px_rgba(43,38,33,0.07)]">
+          <div className="absolute inset-x-0 top-0 h-36 bg-[radial-gradient(circle_at_top_left,rgba(58,95,118,0.18),transparent_34%),radial-gradient(circle_at_top_right,rgba(181,138,67,0.15),transparent_34%)]" />
+          <div className="pointer-events-none absolute inset-y-0 left-[285px] hidden w-px bg-[linear-gradient(180deg,transparent,rgba(223,211,196,0.9),transparent)] lg:block" />
           <div className="relative grid gap-8 lg:grid-cols-[285px_minmax(0,1fr)]">
-            <aside className="border-b border-[#E9DFD1] bg-white/70 p-4 lg:min-h-screen lg:border-b-0 lg:border-r lg:p-6">
-              <div className="sticky top-6 space-y-5">
+            <aside className="border-b border-[#E9DFD1] bg-[linear-gradient(180deg,rgba(255,255,255,0.76),rgba(255,251,245,0.72))] p-4 lg:min-h-screen lg:border-b-0 lg:border-r lg:p-6">
+              <div className="sticky top-6 space-y-5 rounded-[28px] border border-[#ECE3D7] bg-[rgba(255,253,248,0.72)] p-4 backdrop-blur-sm lg:p-0 lg:border-0 lg:bg-transparent">
                 <div className="flex items-center gap-3">
                   <div className="rounded-xl bg-[#F4EEE3] p-2 text-[#745F4C]"><Icon name="menu" size={18} /></div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">NFLK</div>
-                    <div className="text-sm text-[#5F554B]">Case infrastructure v5</div>
+                    <div className="text-sm text-[#5F554B]">Case infrastructure v7</div>
                   </div>
                 </div>
                 <RailSummary activeId={activeId} mode={mode} />
@@ -1225,17 +1229,19 @@ export default function NFLKCaseInfrastructure() {
                 <ReadingPathCard mode={mode} />
               </div>
             </aside>
-            <main className="min-w-0 p-4 sm:p-6 lg:p-8 xl:p-10">
+            <main className="min-w-0 p-4 sm:p-6 lg:p-8 xl:p-10 2xl:p-12">
               <div className="mb-10" id="overview">
-                <div className="mb-4 flex items-start justify-between gap-3">
+                <div className="mb-5 flex items-start justify-between gap-4">
                   <div className="max-w-5xl space-y-4">
                     <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7A6A58]">{mode === "zh" ? HERO.eyebrow.zh : mode === "en" ? HERO.eyebrow.en : `${HERO.eyebrow.en} · ${HERO.eyebrow.zh}`}</div>
                     <h1 className="text-[32px] font-semibold leading-tight tracking-tight text-[#221D18] sm:text-[40px] xl:text-[52px]">
                       {mode === "bi" ? <div className="space-y-2"><div>{HERO.title.en}</div><div className="text-[24px] font-medium text-[#5E544B] sm:text-[28px] xl:text-[34px]">{HERO.title.zh}</div></div> : mode === "en" ? HERO.title.en : HERO.title.zh}
                     </h1>
-                    <TextBlock copy={HERO.summary} mode={mode} className="max-w-4xl text-[16px] leading-8 text-[#4B433C]" zhClassName="border-[#D7CCBC] text-[#5C5248]" />
+                    <div className="max-w-4xl rounded-[26px] border border-[#E6DCCD] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,250,243,0.92))] p-4 shadow-[0_12px_30px_rgba(43,38,33,0.04)] sm:p-5">
+                      <TextBlock copy={HERO.summary} mode={mode} className="text-[16px] leading-8 text-[#4B433C]" zhClassName="border-[#D7CCBC] text-[#5C5248]" />
+                    </div>
                   </div>
-                  <div className="hidden rounded-2xl border border-[#E4DACB] bg-white/90 px-3 py-2 text-xs text-[#6D6257] md:block"><div className="flex items-center gap-2"><Icon name="book" size={16} /><span>{mode === "zh" ? "預設英語主版本" : mode === "en" ? "English-first reading view" : "English-first reading view · 英語主版本"}</span></div></div>
+                  <div className="hidden rounded-2xl border border-[#E4DACB] bg-[linear-gradient(180deg,#FFFFFF,#FFF9F0)] px-3 py-2 text-xs text-[#6D6257] shadow-[0_10px_24px_rgba(43,38,33,0.04)] md:block"><div className="flex items-center gap-2"><Icon name="book" size={16} /><span>{mode === "zh" ? "預設英語主版本" : mode === "en" ? "English-first reading view" : "English-first reading view · 英語主版本"}</span></div></div>
                 </div>
                 <MobileJumpNav items={navItems} activeId={activeId} onClick={scrollToId} mode={mode} />
                 <StickySummaryStrip activeId={activeId} mode={mode} navItems={navItems} />
