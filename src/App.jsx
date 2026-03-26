@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+
+import React, { useEffect, useMemo, useState } from "react";
 
 const PALETTE = {
   bg: "#FCFAF2",
@@ -111,6 +112,67 @@ const HERO = {
     zh: "這不只是關於 attention 的故事，而是 attention 如何變成有組織的施壓，又如何進一步推動政策移動的案例。到了 2018 年 11 月，核心問題已不再是 awareness，而是 implementation。",
   },
 };
+
+const SECTION_NOTES = {
+  overview: { en: "Core thesis, case boundary, and the numbers worth remembering.", zh: "先抓主論點、案例邊界，以及最值得記住的數字。" },
+  timeline: { en: "A dual-track view of campaign escalation and policy movement.", zh: "用雙軌方式看 campaign 升級與政策移動。" },
+  mechanism: { en: "The operating problem, why PPIO was insufficient, and what a real fix required.", zh: "看懂運作問題、PPIO 的侷限，以及真正解方需要甚麼。" },
+  people: { en: "Who did what, and why role clarity became a hidden advantage.", zh: "關鍵人物各自做了甚麼，及分工如何成為隱性優勢。" },
+  campaigns: { en: "Three campaigns, three different jobs, and one broader conversion system.", zh: "三個 campaign，各自不同任務，共同形成轉換系統。" },
+  government: { en: "A fair reading of state response, partial progress, and trust breakdown.", zh: "平衡評估政府回應、有限進展與信任轉折。" },
+  strategy: { en: "The strongest short-term and long-term answers supported by the case.", zh: "從 case evidence 推出的短期與長期最佳策略答案。" },
+  discussion: { en: "The safest opening, framing moves, and Q&A prompts for class.", zh: "課堂上最穩的開場、框架語句與 Q&A 問題。" },
+};
+
+const READING_PATH = [
+  { en: "Start with the decision point so the whole case is anchored in November 2018 rather than in the earlier awareness phase.", zh: "先看決策點，把整個案例固定在 2018 年 11 月，而不是停留在早期 awareness 階段。" },
+  { en: "Use the dual-track timeline next so the campaign and the policy process stay connected in your head.", zh: "接著看雙軌時間線，讓 campaign 與政策進程在腦中保持連動。" },
+  { en: "Then compare the three guerrilla campaigns by job, not by surface creativity alone.", zh: "再把三個 guerrilla campaign 按任務比較，而不是只看表面創意。" },
+  { en: "End with strategy and discussion so you can convert reading into a class-ready position.", zh: "最後看策略與課堂應答，將閱讀直接轉成可發言立場。" },
+];
+
+const CAMPAIGN_SCOREBOARD = [
+  {
+    title: { en: "Baby Name", zh: "Baby Name" },
+    note: { en: "Best at broadening identification", zh: "最擅長擴大認同與共感" },
+    tone: "blue",
+    scores: [
+      { label: { en: "Public identification", zh: "公眾認同" }, value: 5 },
+      { label: { en: "Political conversion", zh: "政治轉換" }, value: 2 },
+      { label: { en: "Scale legibility", zh: "規模可讀性" }, value: 3 },
+      { label: { en: "Repeatability", zh: "重複操作性" }, value: 4 },
+    ],
+  },
+  {
+    title: { en: "Paper Airplane", zh: "Paper Airplane" },
+    note: { en: "Best at visible political action", zh: "最擅長促成可見政治行動" },
+    tone: "green",
+    scores: [
+      { label: { en: "Public identification", zh: "公眾認同" }, value: 3 },
+      { label: { en: "Political conversion", zh: "政治轉換" }, value: 5 },
+      { label: { en: "Scale legibility", zh: "規模可讀性" }, value: 3 },
+      { label: { en: "Repeatability", zh: "重複操作性" }, value: 2 },
+    ],
+  },
+  {
+    title: { en: "100,000 Cities", zh: "100,000 Cities" },
+    note: { en: "Best at making scale feel real", zh: "最擅長把規模變得具體" },
+    tone: "amber",
+    scores: [
+      { label: { en: "Public identification", zh: "公眾認同" }, value: 3 },
+      { label: { en: "Political conversion", zh: "政治轉換" }, value: 3 },
+      { label: { en: "Scale legibility", zh: "規模可讀性" }, value: 5 },
+      { label: { en: "Repeatability", zh: "重複操作性" }, value: 4 },
+    ],
+  },
+];
+
+const IMPLEMENTATION_DASHBOARD = [
+  { title: { en: "Legislative dependence", zh: "立法依賴風險" }, value: 88, tone: "rust", text: { en: "Bill C-59 still needed to move before the parliamentary window closed.", zh: "Bill C-59 仍需在國會時程關閉前往前推進。" } },
+  { title: { en: "Administrative buildout", zh: "行政建置風險" }, value: 74, tone: "amber", text: { en: "Budget approval alone did not create a working redress system.", zh: "預算核定本身，不會自動變成可運作的 redress system。" } },
+  { title: { en: "Resource fatigue", zh: "資源疲勞風險" }, value: 82, tone: "plum", text: { en: "NFLK had no outside funding and had already absorbed major personal and volunteer costs.", zh: "NFLK 沒有外部資金，而且已承擔高額個人與志工成本。" } },
+  { title: { en: "Political turnover", zh: "政治更替風險" }, value: 79, tone: "blue", text: { en: "The 2019 election created continuity risk even after the budget win.", zh: "即使預算已到位，2019 選舉仍帶來延續性風險。" } },
+];
 
 const STAT_CARDS = [
   { icon: "clock", color: "blue", value: { en: "3 years", zh: "3 年" }, label: { en: "Campaign duration before the November 2018 decision point", zh: "到 2018 年 11 月決策點前的倡議期" } },
@@ -261,12 +323,30 @@ function labelForMode(copy, mode) {
   return `${copy.en} · ${copy.zh}`;
 }
 
+function DualLabel({ en, zh, mode, className = "", zhClassName = "" }) {
+  if (mode === "bi") {
+    return (
+      <div className={`space-y-1 ${className}`}>
+        <div>{en}</div>
+        <div className={zhClassName}>{zh}</div>
+      </div>
+    );
+  }
+  return <div className={className}>{mode === "en" ? en : zh}</div>;
+}
+
 function TextBlock({ copy, mode, className = "", zhClassName = "" }) {
   if (mode === "bi") {
     return (
       <div className={`space-y-2 ${className}`}>
-        <div>{copy.en}</div>
-        <div className={`border-l-2 pl-3 text-[15px] leading-7 ${zhClassName || "border-[#D6C9B9] text-[#5C5248]"}`}>{copy.zh}</div>
+        <div className="grid grid-cols-[34px_minmax(0,1fr)] items-start gap-3">
+          <div className="pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8A7B6E]">EN</div>
+          <div>{copy.en}</div>
+        </div>
+        <div className={`grid grid-cols-[34px_minmax(0,1fr)] items-start gap-3 border-l-2 pl-3 ${zhClassName || "border-[#D6C9B9] text-[#5C5248]"}`}>
+          <div className="pt-1 text-[10px] font-semibold tracking-[0.12em] text-[#9A8B7E]">中文</div>
+          <div>{copy.zh}</div>
+        </div>
       </div>
     );
   }
@@ -495,22 +575,193 @@ function StrategyCard({ item, mode }) {
 function NavItem({ id, label, activeId, onClick, mode }) {
   const active = activeId === id;
   return (
-    <button onClick={() => onClick(id)} className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition ${active ? "bg-[#2F5168] text-white" : "text-[#5D5349] hover:bg-[#F6F0E6]"}`}>
-      <span>{mode === "en" ? label.en : mode === "zh" ? label.zh : label.en}</span>
+    <button onClick={() => onClick(id)} className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition ${active ? "bg-[#2F5168] text-white shadow-sm" : "text-[#5D5349] hover:bg-[#F6F0E6]"}`}>
+      {mode === "bi" ? (
+        <div className="space-y-0.5">
+          <div className="font-medium leading-5">{label.en}</div>
+          <div className={`text-xs leading-5 ${active ? "text-white/80" : "text-[#8B7D70]"}`}>{label.zh}</div>
+        </div>
+      ) : (
+        <span>{mode === "en" ? label.en : label.zh}</span>
+      )}
       <Icon name="arrowRight" size={15} className={active ? "opacity-90" : "opacity-50"} />
     </button>
+  );
+}
+
+
+function SectionMapCard({ item, mode, activeId, onClick }) {
+  const active = item.id === activeId;
+  return (
+    <button onClick={() => onClick(item.id)} className={`rounded-2xl border p-4 text-left transition ${active ? "border-[#2F5168] bg-[#F4F8FB] shadow-sm" : "border-[#E5DACA] bg-white hover:border-[#CBBBA6] hover:bg-[#FFFCF7]"}`}>
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <DualLabel en={item.label.en} zh={item.label.zh} mode={mode} className="text-sm font-semibold text-[#241F1A]" zhClassName="text-xs text-[#7C6E61]" />
+        <div className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] ${active ? "bg-[#2F5168] text-white" : "bg-[#F5EFE4] text-[#7A6C5D]"}`}>{String(item.index).padStart(2, "0")}</div>
+      </div>
+      <TextBlock copy={SECTION_NOTES[item.id]} mode={mode} className="text-[13px] leading-6 text-[#5A5047]" zhClassName="border-[#DDD2C2] text-[#6B6057]" />
+    </button>
+  );
+}
+
+function MobileJumpNav({ items, activeId, onClick, mode }) {
+  return (
+    <div className="-mx-1 overflow-x-auto pb-1 lg:hidden">
+      <div className="flex min-w-max gap-2 px-1">
+        {items.map((item) => {
+          const active = item.id === activeId;
+          return (
+            <button key={item.id} onClick={() => onClick(item.id)} className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${active ? "border-[#2F5168] bg-[#2F5168] text-white" : "border-[#DED2C3] bg-white text-[#64594F]"}`}>
+              {mode === "en" ? item.label.en : mode === "zh" ? item.label.zh : item.label.en}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function RailSummary({ activeId, mode }) {
+  const label = SECTION_LABELS[activeId] || SECTION_LABELS.overview;
+  const note = SECTION_NOTES[activeId] || SECTION_NOTES.overview;
+  return (
+    <div className="rounded-2xl border border-[#E7DDCF] bg-[#FFFCF7] p-4">
+      <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7C6C5D]">{mode === "zh" ? "目前區段" : mode === "en" ? "Current section" : "Current section · 目前區段"}</div>
+      <DualLabel en={label.en} zh={label.zh} mode={mode} className="text-base font-semibold text-[#241F1A]" zhClassName="text-sm text-[#75685B]" />
+      <div className="mt-3">
+        <TextBlock copy={note} mode={mode} className="text-sm leading-7 text-[#5B5148]" zhClassName="border-[#DDD2C2] text-[#675D54]" />
+      </div>
+    </div>
+  );
+}
+
+function ReadingPathCard({ mode }) {
+  return (
+    <div className="rounded-2xl border border-[#E7DDCF] bg-[#FBF7EF] p-4">
+      <div className="mb-3 text-sm font-semibold text-[#2B2621]">{mode === "zh" ? "建議閱讀路徑" : mode === "en" ? "Suggested reading path" : "Suggested reading path · 建議閱讀路徑"}</div>
+      <div className="space-y-3">
+        {READING_PATH.map((item, idx) => (
+          <div key={idx} className="grid grid-cols-[22px_minmax(0,1fr)] gap-3">
+            <div className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[10px] font-semibold text-[#7A6C5D] shadow-sm">{idx + 1}</div>
+            <TextBlock copy={item} mode={mode} className="text-sm leading-7 text-[#5B5148]" zhClassName="border-[#DDD2C2] text-[#675D54]" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScoreBar({ value, tone }) {
+  const strong = tone === "green" ? PALETTE.green : tone === "amber" ? PALETTE.amber : tone === "rust" ? PALETTE.rust : tone === "plum" ? PALETTE.plum : PALETTE.blue;
+  const soft = tone === "green" ? PALETTE.greenSoft : tone === "amber" ? PALETTE.amberSoft : tone === "rust" ? PALETTE.rustSoft : tone === "plum" ? PALETTE.plumSoft : PALETTE.blueSoft;
+  return (
+    <div className="flex items-center gap-1.5">
+      {[1, 2, 3, 4, 5].map((step) => (
+        <div key={step} className="h-2 flex-1 rounded-full" style={{ backgroundColor: step <= value ? strong : soft, opacity: step <= value ? 1 : 0.75 }} />
+      ))}
+    </div>
+  );
+}
+
+function CampaignScoreboard({ mode }) {
+  return (
+    <div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6">
+      <div className="mb-5 flex items-start gap-3">
+        <div className="rounded-xl bg-[#F2ECF4] p-2 text-[#6E5873]"><Icon name="layers" size={18} /></div>
+        <div>
+          <div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "Campaign analytical scoreboard" : mode === "en" ? "Campaign analytical scoreboard" : "Campaign analytical scoreboard · Campaign 分析評分表"}</div>
+          <div className="mt-1 text-sm text-[#5E544B]">{mode === "zh" ? "這是基於案例證據的分析圖，不是案例原始數據表。目的在於更快比較三個 campaign 各自最強的功能。" : mode === "en" ? "This is an analytical reading of the case, not a raw case exhibit. It shows, at a glance, what each campaign did best." : "This is an analytical reading of the case, not a raw case exhibit. It shows, at a glance, what each campaign did best.｜這是基於案例證據的分析圖，不是案例原始數據表。目的在於更快比較三個 campaign 各自最強的功能。"}</div>
+        </div>
+      </div>
+      <div className="grid gap-4 xl:grid-cols-3">
+        {CAMPAIGN_SCOREBOARD.map((item, idx) => (
+          <div key={idx} className="rounded-2xl border border-[#E7DDCF] bg-[#FFFDF8] p-4">
+            <div className="mb-3">
+              <DualLabel en={item.title.en} zh={item.title.zh} mode={mode} className="text-base font-semibold text-[#241F1A]" zhClassName="text-sm text-[#75685B]" />
+              <div className="mt-1 text-sm text-[#6A5F55]">{mode === "en" ? item.note.en : mode === "zh" ? item.note.zh : item.note.en}</div>
+            </div>
+            <div className="space-y-3">
+              {item.scores.map((score, scoreIdx) => (
+                <div key={scoreIdx} className="space-y-1.5">
+                  <DualLabel en={score.label.en} zh={score.label.zh} mode={mode} className="text-[12px] font-medium text-[#4C443C]" zhClassName="text-[11px] text-[#7C6F62]" />
+                  <div className="flex items-center gap-3">
+                    <div className="min-w-0 flex-1"><ScoreBar value={score.value} tone={item.tone} /></div>
+                    <div className="w-5 text-right text-[12px] font-semibold text-[#6A5F55]">{score.value}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ImplementationMeter({ item, mode }) {
+  const strong = item.tone === "green" ? PALETTE.green : item.tone === "amber" ? PALETTE.amber : item.tone === "rust" ? PALETTE.rust : item.tone === "plum" ? PALETTE.plum : PALETTE.blue;
+  const soft = item.tone === "green" ? PALETTE.greenSoft : item.tone === "amber" ? PALETTE.amberSoft : item.tone === "rust" ? PALETTE.rustSoft : item.tone === "plum" ? PALETTE.plumSoft : PALETTE.blueSoft;
+  return (
+    <div className="rounded-2xl border border-[#E7DDCF] bg-[#FFFDF8] p-4">
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <DualLabel en={item.title.en} zh={item.title.zh} mode={mode} className="text-sm font-semibold text-[#241F1A]" zhClassName="text-xs text-[#7C6F62]" />
+        <div className="text-sm font-semibold" style={{ color: strong }}>{item.value}</div>
+      </div>
+      <div className="mb-3 h-2.5 rounded-full" style={{ backgroundColor: soft }}>
+        <div className="h-2.5 rounded-full" style={{ width: `${item.value}%`, backgroundColor: strong }} />
+      </div>
+      <TextBlock copy={item.text} mode={mode} className="text-sm leading-7 text-[#5A5047]" zhClassName="border-[#DDD2C2] text-[#6B6057]" />
+    </div>
+  );
+}
+
+function ImplementationDashboard({ mode }) {
+  return (
+    <div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6">
+      <div className="mb-5 flex items-start gap-3">
+        <div className="rounded-xl bg-[#F7F0E1] p-2 text-[#B58A43]"><Icon name="alert" size={18} /></div>
+        <div>
+          <div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "Implementation risk dashboard" : mode === "en" ? "Implementation risk dashboard" : "Implementation risk dashboard · Implementation 風險面板"}</div>
+          <div className="mt-1 text-sm text-[#5E544B]">{mode === "zh" ? "這不是在重複說明案例，而是把 2018 年 11 月決策點背後的四個主要風險視覺化。" : mode === "en" ? "This does not restate the case. It visualizes the four major risks sitting behind the November 2018 decision point." : "This does not restate the case. It visualizes the four major risks sitting behind the November 2018 decision point.｜這不是在重複說明案例，而是把 2018 年 11 月決策點背後的四個主要風險視覺化。"}</div>
+        </div>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2">{IMPLEMENTATION_DASHBOARD.map((item, idx) => <ImplementationMeter key={idx} item={item} mode={mode} />)}</div>
+    </div>
   );
 }
 
 export default function NFLKCaseInfrastructure() {
   const [mode, setMode] = useState("en");
   const [activeId, setActiveId] = useState("overview");
-  const navItems = useMemo(() => Object.entries(SECTION_LABELS).map(([id, label]) => ({ id, label })), []);
+  const navItems = useMemo(() => Object.entries(SECTION_LABELS).map(([id, label], index) => ({ id, label, index: index + 1 })), []);
+
+  useEffect(() => {
+    const ids = navItems.map((item) => item.id);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) {
+          setActiveId(visible[0].target.id);
+        }
+      },
+      { rootMargin: "-18% 0px -55% 0px", threshold: [0.2, 0.35, 0.6] }
+    );
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [navItems]);
 
   const scrollToId = (id) => {
-    setActiveId(id);
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (el) {
+      setActiveId(id);
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   const langButtons = [
@@ -521,17 +772,17 @@ export default function NFLKCaseInfrastructure() {
 
   return (
     <div className="min-h-screen w-full" style={{ backgroundColor: PALETTE.bg, color: PALETTE.ink }}>
-      <div className="mx-auto max-w-[1600px] px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1660px] px-4 pb-16 pt-6 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-[32px] border border-[#E0D5C6] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,251,245,0.96))] shadow-[0_20px_60px_rgba(43,38,33,0.06)]">
           <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top_left,rgba(58,95,118,0.16),transparent_35%),radial-gradient(circle_at_top_right,rgba(181,138,67,0.14),transparent_35%)]" />
-          <div className="relative grid gap-8 lg:grid-cols-[260px_minmax(0,1fr)]">
+          <div className="relative grid gap-8 lg:grid-cols-[285px_minmax(0,1fr)]">
             <aside className="border-b border-[#E9DFD1] bg-white/70 p-4 lg:min-h-screen lg:border-b-0 lg:border-r lg:p-6">
               <div className="sticky top-6 space-y-5">
                 <div className="flex items-center gap-3">
                   <div className="rounded-xl bg-[#F4EEE3] p-2 text-[#745F4C]"><Icon name="menu" size={18} /></div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">NFLK</div>
-                    <div className="text-sm text-[#5F554B]">Case infrastructure</div>
+                    <div className="text-sm text-[#5F554B]">Case infrastructure v2</div>
                   </div>
                 </div>
                 <div className="rounded-2xl border border-[#E7DDCF] bg-[#FFFCF7] p-3">
@@ -545,19 +796,11 @@ export default function NFLKCaseInfrastructure() {
                     })}
                   </div>
                 </div>
+                <RailSummary activeId={activeId} mode={mode} />
                 <div className="space-y-2">
                   {navItems.map((item) => <NavItem key={item.id} id={item.id} label={item.label} activeId={activeId} onClick={scrollToId} mode={mode} />)}
                 </div>
-                <div className="rounded-2xl border border-[#E7DDCF] bg-[#FBF7EF] p-4">
-                  <div className="mb-2 text-sm font-semibold text-[#2B2621]">{mode === "zh" ? "閱讀提示" : mode === "en" ? "Reading tip" : "Reading tip · 閱讀提示"}</div>
-                  <div className="text-sm leading-7 text-[#5B5148]">
-                    {mode === "zh"
-                      ? "先看決策點，再看雙軌時間線，接著看 campaign 比較與政府表格，最後回到策略答案與課堂發言。"
-                      : mode === "en"
-                      ? "Start with the decision point, then the dual-track timeline, then the campaign and government comparison blocks, and finish with the strategy and discussion sections."
-                      : "Start with the decision point, then the dual-track timeline, then the campaign and government comparison blocks, and finish with the strategy and discussion sections.｜先看決策點，再看雙軌時間線，接著看 campaign 比較與政府表格，最後回到策略答案與課堂發言。"}
-                  </div>
-                </div>
+                <ReadingPathCard mode={mode} />
               </div>
             </aside>
             <main className="min-w-0 p-4 sm:p-6 lg:p-8 xl:p-10">
@@ -572,10 +815,24 @@ export default function NFLKCaseInfrastructure() {
                   </div>
                   <div className="hidden rounded-2xl border border-[#E4DACB] bg-white/90 px-3 py-2 text-xs text-[#6D6257] md:block"><div className="flex items-center gap-2"><Icon name="book" size={16} /><span>{mode === "zh" ? "預設英語主版本" : mode === "en" ? "English-first reading view" : "English-first reading view · 英語主版本"}</span></div></div>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{STAT_CARDS.map((item, idx) => <StatCard key={idx} item={item} mode={mode} />)}</div>
+                <MobileJumpNav items={navItems} activeId={activeId} onClick={scrollToId} mode={mode} />
+                <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{STAT_CARDS.map((item, idx) => <StatCard key={idx} item={item} mode={mode} />)}</div>
               </div>
 
               <div className="mb-12 grid gap-4 lg:grid-cols-3">{CASE_BOUNDARY.map((item, idx) => <BoundaryCard key={idx} item={item} mode={mode} />)}</div>
+
+              <section className="mb-16 space-y-6">
+                <div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6">
+                  <div className="mb-5 flex items-start gap-3">
+                    <div className="rounded-xl bg-[#EAF1F5] p-2 text-[#3A5F76]"><Icon name="map" size={18} /></div>
+                    <div>
+                      <div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "Section map" : mode === "en" ? "Section map" : "Section map · 區段地圖"}</div>
+                      <div className="mt-1 text-sm text-[#5E544B]">{mode === "zh" ? "先知道每一區負責回答哪一個問題，再進入細節，整體閱讀會穩很多。" : mode === "en" ? "Know what each section is for before you go deep. It keeps the case easier to navigate and revise." : "Know what each section is for before you go deep. It keeps the case easier to navigate and revise.｜先知道每一區負責回答哪一個問題，再進入細節，整體閱讀會穩很多。"}</div>
+                    </div>
+                  </div>
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{navItems.map((item) => <SectionMapCard key={item.id} item={item} mode={mode} activeId={activeId} onClick={scrollToId} />)}</div>
+                </div>
+              </section>
 
               <section className="mb-16 space-y-6"><SectionHeader title={DECISION_POINT.title} summary={DECISION_POINT.thesis} mode={mode} /><div className="grid gap-4 md:grid-cols-2">{DECISION_POINT.items.map((item, idx) => <DecisionItem key={idx} item={item} mode={mode} />)}</div></section>
 
@@ -585,9 +842,9 @@ export default function NFLKCaseInfrastructure() {
 
               <section className="mb-16 space-y-6" id="people"><SectionHeader title={{ en: "Who made the campaign work", zh: "這個 campaign 為何能運作" }} summary={{ en: "A key strength of NFLK was role clarity over time. The group started from family frustration, but eventually became a distributed advocacy system with communications, legal, bilingual outreach, and political process support.", zh: "NFLK 的重要強項之一，是角色分工會隨時間逐步清楚。它起初只是家庭困擾的集合，但後來慢慢變成具備溝通、法律、雙語外展與政治流程能力的分散式倡議系統。" }} mode={mode} /><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{PEOPLE.map((item, idx) => <PersonCard key={idx} item={item} mode={mode} />)}</div></section>
 
-              <section className="mb-16 space-y-6" id="campaigns"><SectionHeader title={{ en: "Why the guerrilla campaigns were effective", zh: "為甚麼 guerrilla campaigns 有效" }} summary={{ en: "The three campaigns did not do the same job. That is exactly why they worked together. One broadened identification, one drove political conversion, and one made scale legible.", zh: "這三個 campaign 並不是在做同一件事，而這正是它們能互補成功的原因。一個擴大認同，一個促成政治轉換，一個把規模變得可讀。" }} mode={mode} /><div className="grid gap-5 xl:grid-cols-3">{CAMPAIGN_CARDS.map((item, idx) => <CampaignCard key={idx} item={item} mode={mode} />)}</div><div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6"><div className="mb-5 flex items-center gap-3"><div className="rounded-xl bg-[#EEF5EE] p-2 text-[#5B6D5B]"><Icon name="target" size={18} /></div><div><div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "媒體、PR、guerrilla 的組合邏輯" : mode === "en" ? "How digital, PR, and guerrilla work fit together" : "How digital, PR, and guerrilla work fit together · 媒體、PR、guerrilla 的組合邏輯"}</div><div className="text-sm text-[#5E544B]">{mode === "zh" ? "從 attention 到 political conversion 的完整路徑" : mode === "en" ? "The full path from attention to political conversion" : "The full path from attention to political conversion · 從 attention 到 political conversion 的完整路徑"}</div></div></div><div className="grid gap-4 xl:grid-cols-3">{MEDIA_LOGIC.map((item, idx) => <MediaCard key={idx} item={item} mode={mode} />)}</div></div></section>
+              <section className="mb-16 space-y-6" id="campaigns"><SectionHeader title={{ en: "Why the guerrilla campaigns were effective", zh: "為甚麼 guerrilla campaigns 有效" }} summary={{ en: "The three campaigns did not do the same job. That is exactly why they worked together. One broadened identification, one drove political conversion, and one made scale legible.", zh: "這三個 campaign 並不是在做同一件事，而這正是它們能互補成功的原因。一個擴大認同，一個促成政治轉換，一個把規模變得可讀。" }} mode={mode} /><div className="grid gap-5 xl:grid-cols-3">{CAMPAIGN_CARDS.map((item, idx) => <CampaignCard key={idx} item={item} mode={mode} />)}</div><CampaignScoreboard mode={mode} /><div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6"><div className="mb-5 flex items-center gap-3"><div className="rounded-xl bg-[#EEF5EE] p-2 text-[#5B6D5B]"><Icon name="target" size={18} /></div><div><div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "媒體、PR、guerrilla 的組合邏輯" : mode === "en" ? "How digital, PR, and guerrilla work fit together" : "How digital, PR, and guerrilla work fit together · 媒體、PR、guerrilla 的組合邏輯"}</div><div className="text-sm text-[#5E544B]">{mode === "zh" ? "從 attention 到 political conversion 的完整路徑" : mode === "en" ? "The full path from attention to political conversion" : "The full path from attention to political conversion · 從 attention 到 political conversion 的完整路徑"}</div></div></div><div className="grid gap-4 xl:grid-cols-3">{MEDIA_LOGIC.map((item, idx) => <MediaCard key={idx} item={item} mode={mode} />)}</div></div></section>
 
-              <section className="mb-16 space-y-6" id="government"><SectionHeader title={{ en: "How to assess the government fairly", zh: "如何公平評估政府角色" }} summary={{ en: "A strong answer is balanced. The government did move, but NFLK’s persistent outside pressure was what made the issue hard to ignore and costly to defer.", zh: "這一題要答得好，關鍵在平衡。政府確實有動，但真正讓這個議題難以被忽略、難以再延後的，是 NFLK 持續不斷的制度外施壓。" }} mode={mode} /><GovernmentTable mode={mode} /><div className="rounded-2xl border border-[#E3D8C8] bg-[#FBF7EE] p-5"><div className="mb-3 text-base font-semibold text-[#241F1A]">{mode === "zh" ? "最穩的總結" : mode === "en" ? "Most defensible conclusion" : "Most defensible conclusion · 最穩的總結"}</div><TextBlock copy={{ en: "Government action mattered, but the 2018 result was best understood as the interaction of inside pressure and outside pressure. NFLK did not replace the state. It made inaction harder.", zh: "政府行動確實重要，但 2018 年的結果，最適合被理解為制度內壓力與制度外壓力的交互作用。NFLK 不是取代政府，而是讓政府更難不作為。" }} mode={mode} className="text-sm leading-7 text-[#4A423A]" zhClassName="border-[#DDD2C2] text-[#5B5148]" /></div></section>
+              <section className="mb-16 space-y-6" id="government"><SectionHeader title={{ en: "How to assess the government fairly", zh: "如何公平評估政府角色" }} summary={{ en: "A strong answer is balanced. The government did move, but NFLK’s persistent outside pressure was what made the issue hard to ignore and costly to defer.", zh: "這一題要答得好，關鍵在平衡。政府確實有動，但真正讓這個議題難以被忽略、難以再延後的，是 NFLK 持續不斷的制度外施壓。" }} mode={mode} /><GovernmentTable mode={mode} /><ImplementationDashboard mode={mode} /><div className="rounded-2xl border border-[#E3D8C8] bg-[#FBF7EE] p-5"><div className="mb-3 text-base font-semibold text-[#241F1A]">{mode === "zh" ? "最穩的總結" : mode === "en" ? "Most defensible conclusion" : "Most defensible conclusion · 最穩的總結"}</div><TextBlock copy={{ en: "Government action mattered, but the 2018 result was best understood as the interaction of inside pressure and outside pressure. NFLK did not replace the state. It made inaction harder.", zh: "政府行動確實重要，但 2018 年的結果，最適合被理解為制度內壓力與制度外壓力的交互作用。NFLK 不是取代政府，而是讓政府更難不作為。" }} mode={mode} className="text-sm leading-7 text-[#4A423A]" zhClassName="border-[#DDD2C2] text-[#5B5148]" /></div></section>
 
               <section className="mb-16 space-y-6"><SectionHeader title={{ en: "What should not be left out", zh: "有哪些重點不應該漏掉" }} summary={{ en: "These are the details that often disappear in shorter summaries, even though they materially improve the quality of interpretation.", zh: "這些是較短版本最容易漏掉，但其實會明顯提升判讀品質的細節。" }} mode={mode} /><div className="grid gap-4 lg:grid-cols-2">{MISSED_POINTS.map((item, idx) => <MissedPoint key={idx} item={item} mode={mode} />)}</div></section>
 
@@ -603,3 +860,4 @@ export default function NFLKCaseInfrastructure() {
     </div>
   );
 }
+
