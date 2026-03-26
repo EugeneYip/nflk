@@ -490,15 +490,9 @@ function DualLabel({ en, zh, mode, className = "", zhClassName = "" }) {
 function TextBlock({ copy, mode, className = "", zhClassName = "" }) {
   if (mode === "bi") {
     return (
-      <div className={`space-y-2 ${className}`}>
-        <div className="grid grid-cols-[34px_minmax(0,1fr)] items-start gap-3">
-          <div className="pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8A7B6E]">EN</div>
-          <div>{copy.en}</div>
-        </div>
-        <div className={`grid grid-cols-[34px_minmax(0,1fr)] items-start gap-3 border-l-2 pl-3 ${zhClassName || "border-[#D6C9B9] text-[#5C5248]"}`}>
-          <div className="pt-1 text-[10px] font-semibold tracking-[0.12em] text-[#9A8B7E]">中文</div>
-          <div>{copy.zh}</div>
-        </div>
+      <div className={`space-y-3 ${className}`}>
+        <div>{copy.en}</div>
+        <div className={`border-l-2 pl-4 ${zhClassName || "border-[#D6C9B9] text-[#5C5248]"}`}>{copy.zh}</div>
       </div>
     );
   }
@@ -1208,18 +1202,18 @@ export default function NFLKCaseInfrastructure() {
     <div className="relative isolate min-h-screen w-full overflow-x-clip" style={{ backgroundColor: PALETTE.bg, color: PALETTE.ink }}>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(58,95,118,0.10),transparent_28%),radial-gradient(circle_at_top_right,rgba(181,138,67,0.10),transparent_26%),linear-gradient(180deg,rgba(252,250,242,1),rgba(248,244,235,0.96))]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(circle_at_20%_10%,rgba(110,88,115,0.08),transparent_24%),radial-gradient(circle_at_80%_0%,rgba(58,95,118,0.08),transparent_22%)]" />
-      <div className="relative mx-auto max-w-[1660px] px-4 pb-20 pt-7 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-[1580px] px-4 pb-20 pt-7 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-[36px] border border-[#E0D5C6] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,251,245,0.95))] shadow-[0_24px_70px_rgba(43,38,33,0.07)]">
           <div className="absolute inset-x-0 top-0 h-36 bg-[radial-gradient(circle_at_top_left,rgba(58,95,118,0.18),transparent_34%),radial-gradient(circle_at_top_right,rgba(181,138,67,0.15),transparent_34%)]" />
-          <div className="pointer-events-none absolute inset-y-0 left-[285px] hidden w-px bg-[linear-gradient(180deg,transparent,rgba(223,211,196,0.9),transparent)] lg:block" />
-          <div className="relative grid gap-8 lg:grid-cols-[285px_minmax(0,1fr)]">
+          <div className="pointer-events-none absolute inset-y-0 left-[272px] hidden w-px bg-[linear-gradient(180deg,transparent,rgba(223,211,196,0.9),transparent)] lg:block" />
+          <div className="relative grid gap-8 lg:grid-cols-[272px_minmax(0,1fr)]">
             <aside className="border-b border-[#E9DFD1] bg-[linear-gradient(180deg,rgba(255,255,255,0.76),rgba(255,251,245,0.72))] p-4 lg:min-h-screen lg:border-b-0 lg:border-r lg:p-6">
               <div className="sticky top-6 space-y-5 rounded-[28px] border border-[#ECE3D7] bg-[rgba(255,253,248,0.72)] p-4 backdrop-blur-sm lg:p-0 lg:border-0 lg:bg-transparent">
                 <div className="flex items-center gap-3">
                   <div className="rounded-xl bg-[#F4EEE3] p-2 text-[#745F4C]"><Icon name="menu" size={18} /></div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">NFLK</div>
-                    <div className="text-sm text-[#5F554B]">Case infrastructure v7</div>
+                    <div className="text-sm text-[#5F554B]">Case infrastructure v8</div>
                   </div>
                 </div>
                 <RailSummary activeId={activeId} mode={mode} />
@@ -1229,15 +1223,16 @@ export default function NFLKCaseInfrastructure() {
                 <ReadingPathCard mode={mode} />
               </div>
             </aside>
-            <main className="min-w-0 p-4 sm:p-6 lg:p-8 xl:p-10 2xl:p-12">
+            <main className="min-w-0 p-5 sm:p-7 lg:p-10 xl:p-12 2xl:p-14">
+              <div className="mx-auto max-w-[1180px] 2xl:max-w-[1220px]">
               <div className="mb-10" id="overview">
                 <div className="mb-5 flex items-start justify-between gap-4">
-                  <div className="max-w-5xl space-y-4">
+                  <div className="max-w-4xl space-y-4">
                     <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7A6A58]">{mode === "zh" ? HERO.eyebrow.zh : mode === "en" ? HERO.eyebrow.en : `${HERO.eyebrow.en} · ${HERO.eyebrow.zh}`}</div>
-                    <h1 className="text-[32px] font-semibold leading-tight tracking-tight text-[#221D18] sm:text-[40px] xl:text-[52px]">
+                    <h1 className="text-[30px] font-semibold leading-[1.08] tracking-tight text-[#221D18] sm:text-[38px] xl:text-[48px]">
                       {mode === "bi" ? <div className="space-y-2"><div>{HERO.title.en}</div><div className="text-[24px] font-medium text-[#5E544B] sm:text-[28px] xl:text-[34px]">{HERO.title.zh}</div></div> : mode === "en" ? HERO.title.en : HERO.title.zh}
                     </h1>
-                    <div className="max-w-4xl rounded-[26px] border border-[#E6DCCD] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,250,243,0.92))] p-4 shadow-[0_12px_30px_rgba(43,38,33,0.04)] sm:p-5">
+                    <div className="max-w-3xl rounded-[26px] border border-[#E6DCCD] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,250,243,0.92))] p-4 shadow-[0_12px_30px_rgba(43,38,33,0.04)] sm:p-5">
                       <TextBlock copy={HERO.summary} mode={mode} className="text-[16px] leading-8 text-[#4B433C]" zhClassName="border-[#D7CCBC] text-[#5C5248]" />
                     </div>
                   </div>
@@ -1282,6 +1277,7 @@ export default function NFLKCaseInfrastructure() {
               <section className="mb-16 space-y-6" id="discussion"><SectionHeader title={{ en: "Cold-call and discussion toolkit", zh: "冷點名與課堂討論工具包" }} summary={{ en: "Use this section when you need a clean, defensible position under pressure.", zh: "若你需要在壓力下快速給出乾淨且站得住腳的回答，就看這一段。" }} mode={mode} /><div className="rounded-[28px] border border-[#E3D8C8] bg-white p-5 sm:p-6"><div className="mb-4 flex items-start gap-3"><div className="rounded-xl bg-[#F7F0E1] p-2 text-[#B58A43]"><Icon name="quote" size={18} /></div><div><div className="text-lg font-semibold text-[#241F1A]">{mode === "en" ? SPEAKING.title.en : mode === "zh" ? SPEAKING.title.zh : SPEAKING.title.en}</div><div className="mt-2 max-w-4xl"><TextBlock copy={SPEAKING.opening} mode={mode} className="text-sm leading-8 text-[#473F38]" zhClassName="border-[#DDD2C2] text-[#5C5248]" /></div></div></div><div className="grid gap-4 lg:grid-cols-3">{SPEAKING.frames.map((item, idx) => <div key={idx} className="rounded-2xl bg-[#FCF8F0] p-4"><div className="mb-2 text-sm font-semibold text-[#302A24]">{labelForMode(item.label, mode)}</div><TextBlock copy={item.text} mode={mode} className="text-sm leading-7 text-[#5B5148]" zhClassName="border-[#DDD2C2] text-[#685E55]" /></div>)}</div></div><div className="rounded-[28px] border border-[#E3D8C8] bg-white p-5 sm:p-6"><div className="mb-4 flex items-center gap-3"><div className="rounded-xl bg-[#EAF1F5] p-2 text-[#3A5F76]"><Icon name="users" size={18} /></div><div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "安全又有品質的 Q&A 問題" : mode === "en" ? "Safe but high-value Q&A prompts" : "Safe but high-value Q&A prompts · 安全又有品質的 Q&A 問題"}</div></div><div className="grid gap-4 lg:grid-cols-2">{QA.map((item, idx) => <div key={idx} className="rounded-2xl border border-[#E8DECF] bg-[#FFFDF8] p-4">{mode === "bi" ? <div className="space-y-2"><div className="text-sm leading-7 text-[#433B34]">{item.en}</div><div className="border-l-2 border-[#DDD2C2] pl-3 text-sm leading-7 text-[#5E544B]">{item.zh}</div></div> : <div className="text-sm leading-7 text-[#433B34]">{mode === "en" ? item.en : item.zh}</div>}</div>)}</div></div></section>
 
               <section className="rounded-[30px] border border-[#D9CEBE] bg-[linear-gradient(180deg,#FFFDF8,#FBF6ED)] p-6 sm:p-8"><div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr] lg:items-center"><div className="space-y-4"><div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7A6A58]">{mode === "zh" ? "最後一句" : mode === "en" ? "Final takeaway" : "Final takeaway · 最後一句"}</div><TextBlock copy={{ en: "NFLK is best understood not as a visibility campaign, but as an example of how a parent-led social advocacy movement converted outrage into organized pressure, and organized pressure into policy movement. The final challenge in the case is whether that movement can now be converted one more time into implementation.", zh: "NFLK 最適合被理解成一個由家長主導的社會倡議運動案例，它把憤怒轉成有組織的施壓，再把有組織的施壓轉成政策移動。這個案例最後真正要回答的問題，是這股力量能否再被轉換一次，真正變成 implementation。" }} mode={mode} className="text-[17px] leading-8 text-[#312B25]" zhClassName="border-[#D9CEBE] text-[#4A4138]" /></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1"><div className="rounded-2xl border border-[#E2D8CA] bg-white p-4"><div className="mb-2 text-sm font-semibold text-[#2B2621]">{mode === "zh" ? "最簡短主張" : mode === "en" ? "Fastest thesis" : "Fastest thesis · 最簡短主張"}</div><div className="text-sm leading-7 text-[#5C5248]">{mode === "zh" ? "2018 年 11 月時，NFLK 最好的方向不是再做一次大眾 awareness，而是集中火力把政治支持與預算核定真正推進到 implementation。" : mode === "en" ? "In November 2018, NFLK’s best move was not another mass-awareness push. It was to concentrate on turning political support and budget approval into implementation." : "In November 2018, NFLK’s best move was not another mass-awareness push. It was to concentrate on turning political support and budget approval into implementation.｜2018 年 11 月時，NFLK 最好的方向不是再做一次大眾 awareness，而是集中火力把政治支持與預算核定真正推進到 implementation。"}</div></div><div className="rounded-2xl border border-[#E2D8CA] bg-white p-4"><div className="mb-2 text-sm font-semibold text-[#2B2621]">{mode === "zh" ? "最需要背的數字" : mode === "en" ? "Numbers worth remembering" : "Numbers worth remembering · 最需要背的數字"}</div><div className="text-sm leading-7 text-[#5C5248]">{mode === "zh" ? "8,140 萬加幣、230 位 MP、338 架紙飛機、估計 100,000 人、超過 25 萬加幣投入。" : mode === "en" ? "CA$81.4M, 230 MPs, 338 paper airplanes, an estimated 100,000 affected people, and more than CA$250K already absorbed." : "CA$81.4M, 230 MPs, 338 paper airplanes, an estimated 100,000 affected people, and more than CA$250K already absorbed.｜8,140 萬加幣、230 位 MP、338 架紙飛機、估計 100,000 人、超過 25 萬加幣投入。"}</div></div></div></div></section>
+              </div>
             </main>
           </div>
         </div>
