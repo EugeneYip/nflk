@@ -1,4 +1,4 @@
-# page-starter
+# The No Fly List Kids Canada - Social Advocacy & Guerrilla Marketing
 > if.eugeneyip.com
 
 A lightweight template repository for publishing LLM generated JSX pages with minimal setup.
