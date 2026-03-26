@@ -1,4 +1,3 @@
-
 import React, { useEffect, useMemo, useState } from "react";
 
 const PALETTE = {
@@ -122,6 +121,130 @@ const SECTION_NOTES = {
   government: { en: "A fair reading of state response, partial progress, and trust breakdown.", zh: "平衡評估政府回應、有限進展與信任轉折。" },
   strategy: { en: "The strongest short-term and long-term answers supported by the case.", zh: "從 case evidence 推出的短期與長期最佳策略答案。" },
   discussion: { en: "The safest opening, framing moves, and Q&A prompts for class.", zh: "課堂上最穩的開場、框架語句與 Q&A 問題。" },
+};
+
+
+const STICKY_SUMMARY = {
+  overview: {
+    thesis: {
+      en: "The case turns on a shift from awareness to implementation. By November 2018, visibility was no longer the main constraint.",
+      zh: "這個案例的核心在於從 awareness 轉向 implementation。到了 2018 年 11 月，可見度已不是主要限制。"
+    },
+    numbers: [
+      { en: "CA$81.4M budget", zh: "8,140 萬加幣預算" },
+      { en: "230 MPs", zh: "230 位 MP" },
+      { en: "CA$250K+ absorbed", zh: "已投入超過 25 萬加幣" },
+    ],
+    oral: {
+      en: "I would open by saying NFLK had already won attention and budget approval. The real question in late 2018 was whether those gains would become a functioning redress system.",
+      zh: "我會先說，NFLK 已經贏得 attention 與預算核定。2018 年底真正要回答的，是這些成果能否變成可運作的 redress system。"
+    },
+  },
+  timeline: {
+    thesis: {
+      en: "The timeline matters because campaign escalation and policy movement were happening together, not in separate stories.",
+      zh: "時間線重要，是因為 campaign 升級與政策移動是同時發生的，不是兩條無關的故事。"
+    },
+    numbers: [
+      { en: "Dec 31, 2015 tweet", zh: "2015 年 12 月 31 日推文" },
+      { en: "Nov 6, 2017 Hill Day", zh: "2017 年 11 月 6 日 Hill Day" },
+      { en: "Feb 27, 2018 budget", zh: "2018 年 2 月 27 日預算" },
+    ],
+    oral: {
+      en: "I would frame the timeline as a move from viral attention, to organized advocacy, to political conversion, and finally to implementation risk.",
+      zh: "我會把時間線框成：病毒式 attention、有組織倡議、政治轉換，最後走到 implementation risk。"
+    },
+  },
+  mechanism: {
+    thesis: {
+      en: "NFLK was confronting a systemic identity-matching problem, not a one-off airport inconvenience.",
+      zh: "NFLK 面對的是制度性的身分比對失靈，不是單一機場小插曲。"
+    },
+    numbers: [
+      { en: "2,000 listed names", zh: "約 2,000 個名單名字" },
+      { en: "~50 per name", zh: "每個名字約 50 人" },
+      { en: "100,000 estimated matches", zh: "估計 100,000 人受影響" },
+    ],
+    oral: {
+      en: "My core point here would be that PPIO signaled responsiveness, but it did not provide the binding Canadian redress path that families actually needed.",
+      zh: "我在這一段的核心會是：PPIO 代表政府有在回應，但它沒有提供家庭真正需要、具拘束力的加拿大 redress path。"
+    },
+  },
+  people: {
+    thesis: {
+      en: "NFLK became more effective as family frustration turned into a role-divided advocacy system.",
+      zh: "當家庭挫折轉成有角色分工的倡議系統後，NFLK 才真正變得更有效。"
+    },
+    numbers: [
+      { en: "Core parents", zh: "核心家長組織者" },
+      { en: "PR, legal, French support", zh: "PR、法律、法語支援" },
+      { en: "National reach", zh: "全國性擴張" },
+    ],
+    oral: {
+      en: "I would stress that role clarity was a hidden advantage. Different people carried communications, politics, legal support, and bilingual outreach.",
+      zh: "我會強調角色分工是隱性優勢。不同人分別承擔溝通、政治、法律與雙語外展。"
+    },
+  },
+  campaigns: {
+    thesis: {
+      en: "The three guerrilla campaigns worked because they solved different communication problems rather than repeating the same tactic.",
+      zh: "三個 guerrilla campaigns 之所以有效，是因為它們分別解決了不同的溝通問題，而不是重複同一招。"
+    },
+    numbers: [
+      { en: "338 paper airplanes", zh: "338 架紙飛機" },
+      { en: "2/3 of Parliament wrote", zh: "約三分之二國會成員寫信" },
+      { en: "100,000 as city scale", zh: "100,000 轉成城市規模" },
+    ],
+    oral: {
+      en: "If called on, I would say Baby Name broadened identification, Paper Airplane drove political conversion, and 100,000 Cities made scale legible.",
+      zh: "若被點到，我會直接說：Baby Name 擴大認同，Paper Airplane 促成政治轉換，100,000 Cities 讓規模變得可讀。"
+    },
+  },
+  government: {
+    thesis: {
+      en: "The fairest reading is that the government moved, but mostly under sustained outside pressure.",
+      zh: "最公平的解讀是：政府確實有動，但多半是在持續的制度外壓力下才推進。"
+    },
+    numbers: [
+      { en: "PPIO created", zh: "PPIO 已成立" },
+      { en: "2017 budget: no funding", zh: "2017 預算：沒有 funding" },
+      { en: "2018 budget: CA$81.4M", zh: "2018 預算：8,140 萬加幣" },
+    ],
+    oral: {
+      en: "I would avoid saying the government was absent. A better answer is that it was responsive but incomplete, and NFLK made delay politically harder.",
+      zh: "我不會說政府完全缺席。更好的答案是，政府有回應，但不完整，而 NFLK 讓延後處理的政治成本變高。"
+    },
+  },
+  strategy: {
+    thesis: {
+      en: "The best answer is disciplined continuation, not endless expansion.",
+      zh: "最佳答案是有紀律地持續，而不是無限擴張。"
+    },
+    numbers: [
+      { en: "Bill C-59 still pending", zh: "Bill C-59 仍待通過" },
+      { en: "230-MP support base", zh: "230 位 MP 支持基礎" },
+      { en: "Finite family resources", zh: "家庭資源有限" },
+    ],
+    oral: {
+      en: "My short answer would be that NFLK should use Hill Day as an implementation push: move Bill C-59, activate supportive MPs, and demand a public roadmap.",
+      zh: "我的簡短答案會是：NFLK 應把 Hill Day 當成 implementation push，推 Bill C-59、動員支持 MPs，並要求公開 roadmap。"
+    },
+  },
+  discussion: {
+    thesis: {
+      en: "The safest class position is precise, balanced, and clearly anchored in case-time evidence.",
+      zh: "課堂上最穩的立場，是精準、平衡，而且清楚錨定在案例當時的證據。"
+    },
+    numbers: [
+      { en: "Case-time only", zh: "只用案例當時資訊" },
+      { en: "Fact first, analysis framed", zh: "先事實，再框架分析" },
+      { en: "One clean opening", zh: "一個乾淨開場立場" },
+    ],
+    oral: {
+      en: "I would open with the implementation shift, then say the best short-term move was focused pressure on Bill C-59 rather than another generic awareness push.",
+      zh: "我會先講 implementation shift，再接著說，最好的短期做法是集中施壓 Bill C-59，而不是再做一次泛泛的 awareness push。"
+    },
+  },
 };
 
 const READING_PATH = [
@@ -864,6 +987,67 @@ function ImplementationDashboard({ mode }) {
   );
 }
 
+
+function StickyChip({ item, mode }) {
+  return (
+    <div className="rounded-full border border-[#E3D8C8] bg-[#FFFDF8] px-3 py-1.5 text-xs font-medium leading-5 text-[#5A5148]">
+      {mode === "bi" ? (
+        <div className="space-y-0.5">
+          <div>{item.en}</div>
+          <div className="text-[#7A6F64]">{item.zh}</div>
+        </div>
+      ) : mode === "en" ? item.en : item.zh}
+    </div>
+  );
+}
+
+function StickySummaryStrip({ activeId, mode, navItems }) {
+  const summary = STICKY_SUMMARY[activeId] || STICKY_SUMMARY.overview;
+  const sectionLabel = navItems.find((item) => item.id === activeId)?.label || SECTION_LABELS.overview;
+  const progressIndex = Math.max(0, navItems.findIndex((item) => item.id === activeId));
+  const progressWidth = `${((progressIndex + 1) / navItems.length) * 100}%`;
+
+  return (
+    <div className="sticky top-3 z-30 mb-8">
+      <div className="overflow-hidden rounded-[24px] border border-[#DCCFBE] bg-[rgba(255,252,246,0.92)] shadow-[0_16px_40px_rgba(43,38,33,0.08)] backdrop-blur">
+        <div className="h-1.5 w-full bg-[#EFE6D8]">
+          <div className="h-full rounded-r-full bg-[#3A5F76] transition-all duration-300" style={{ width: progressWidth }} />
+        </div>
+        <div className="grid gap-4 p-4 md:p-5 xl:grid-cols-[0.95fr_0.8fr_1.15fr]">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#786B5F]">
+              <Icon name="layers" size={14} />
+              <span>{mode === "zh" ? "課堂速讀模式" : mode === "en" ? "Class quick-read mode" : "Class quick-read mode · 課堂速讀模式"}</span>
+            </div>
+            <div className="text-sm font-semibold text-[#251F1A]">
+              {mode === "bi" ? `${sectionLabel.en} · ${sectionLabel.zh}` : mode === "en" ? sectionLabel.en : sectionLabel.zh}
+            </div>
+            <TextBlock copy={summary.thesis} mode={mode} className="text-sm leading-7 text-[#453D36]" zhClassName="border-[#DDD2C2] text-[#5C5248]" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#786B5F]">
+              <Icon name="spark" size={14} />
+              <span>{mode === "zh" ? "關鍵數字" : mode === "en" ? "Key numbers" : "Key numbers · 關鍵數字"}</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {summary.numbers.map((item, idx) => <StickyChip key={idx} item={item} mode={mode} />)}
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#786B5F]">
+              <Icon name="quote" size={14} />
+              <span>{mode === "zh" ? "最穩開口立場" : mode === "en" ? "Safest oral position" : "Safest oral position · 最穩開口立場"}</span>
+            </div>
+            <div className="rounded-2xl border border-[#E5DACC] bg-white/80 p-3">
+              <TextBlock copy={summary.oral} mode={mode} className="text-sm leading-7 text-[#433B34]" zhClassName="border-[#DDD2C2] text-[#5C5248]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function NFLKCaseInfrastructure() {
   const [mode, setMode] = useState("en");
   const [activeId, setActiveId] = useState("overview");
@@ -917,7 +1101,7 @@ export default function NFLKCaseInfrastructure() {
                   <div className="rounded-xl bg-[#F4EEE3] p-2 text-[#745F4C]"><Icon name="menu" size={18} /></div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">NFLK</div>
-                    <div className="text-sm text-[#5F554B]">Case infrastructure v3</div>
+                    <div className="text-sm text-[#5F554B]">Case infrastructure v4</div>
                   </div>
                 </div>
                 <div className="rounded-2xl border border-[#E7DDCF] bg-[#FFFCF7] p-3">
@@ -951,6 +1135,7 @@ export default function NFLKCaseInfrastructure() {
                   <div className="hidden rounded-2xl border border-[#E4DACB] bg-white/90 px-3 py-2 text-xs text-[#6D6257] md:block"><div className="flex items-center gap-2"><Icon name="book" size={16} /><span>{mode === "zh" ? "預設英語主版本" : mode === "en" ? "English-first reading view" : "English-first reading view · 英語主版本"}</span></div></div>
                 </div>
                 <MobileJumpNav items={navItems} activeId={activeId} onClick={scrollToId} mode={mode} />
+                <StickySummaryStrip activeId={activeId} mode={mode} navItems={navItems} />
                 <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{STAT_CARDS.map((item, idx) => <StatCard key={idx} item={item} mode={mode} />)}</div>
               </div>
 
