@@ -238,6 +238,30 @@ const CAMPAIGN_CARDS = [
   { title: { en: "100,000 Cities Campaign", zh: "100,000 Cities Campaign" }, audience: { en: "Main audience: politicians and local opinion leaders", zh: "主要受眾：政治人物與地方意見節點" }, job: { en: "Communication job: turn an abstract estimate into a geographic image people could immediately feel.", zh: "溝通任務：把抽象估計數字轉成地理畫面，讓人一眼理解規模。" }, evidence: { en: "The campaign compared the estimated 100,000 affected people with whole city populations such as Nanaimo and Cape Breton Island.", zh: "它把估計的 100,000 名受影響者，對照到 Nanaimo、Cape Breton Island 等整個城市的人口。" }, strength: { en: "It made scale legible and resonated especially with politicians.", zh: "它讓規模變得可讀，對政治人物特別有效。" }, limit: { en: "The number remained an estimate, not a census count.", zh: "但這個數字畢竟是估計值，不是人口普查。" }, color: "amber" },
 ];
 
+const EXHIBIT_RECONSTRUCTIONS = [
+  {
+    kind: "baby",
+    tone: "blue",
+    title: { en: "Baby Name mini exhibit", zh: "Baby Name 小型示意圖" },
+    fact: { en: "Public-facing visual: baby photo, flagged name, and the number of Canadians who shared that name.", zh: "面向公眾的視覺：嬰兒照片、被誤判名字，以及共享同名的加拿大人人數。" },
+    caption: { en: "Built to widen identification and show the problem was broader than a few visible families.", zh: "核心作用是擴大認同，讓外界理解這不是只有少數可見家庭的問題。" },
+  },
+  {
+    kind: "plane",
+    tone: "green",
+    title: { en: "Paper Airplane mini exhibit", zh: "Paper Airplane 小型示意圖" },
+    fact: { en: "MP-targeted object: 338 hand-folded planes, one for each MP, with children’s faces visible on the wings.", zh: "針對 MPs 的實體物件：共 338 架手折紙飛機，每位 MP 一架，機翼上可見孩子照片。" },
+    caption: { en: "Built for conversion to action. The strongest case signal is that about two-thirds of Parliament wrote support letters.", zh: "核心作用是促成行動。案例裡最強的訊號，是約三分之二國會成員最後寫信支持。" },
+  },
+  {
+    kind: "cities",
+    tone: "amber",
+    title: { en: "100,000 Cities mini exhibit", zh: "100,000 Cities 小型示意圖" },
+    fact: { en: "Scale translation visual: the estimated 100,000 affected people were compared with city populations such as Nanaimo and Cape Breton Island.", zh: "把抽象規模翻成地理畫面：將估計 100,000 名受影響者，對照到 Nanaimo、Cape Breton Island 等城市人口。" },
+    caption: { en: "Built to make scale feel concrete, especially for politicians and local opinion leaders.", zh: "核心作用是讓規模變具體，對政治人物與地方意見節點尤其有效。" },
+  },
+];
+
 const MEDIA_LOGIC = [
   { title: { en: "Digital media", zh: "數位媒體" }, bullets: [
     { en: "Created speed, low-cost reach, and direct access to policymakers and journalists.", zh: "帶來速度、低成本擴散，以及直接接觸官員與媒體的能力。" },
@@ -513,6 +537,117 @@ function CampaignCard({ item, mode }) {
   );
 }
 
+
+
+function ExhibitIllustration({ kind, tone }) {
+  const strong = tone === "green" ? PALETTE.green : tone === "amber" ? PALETTE.amber : tone === "rust" ? PALETTE.rust : tone === "plum" ? PALETTE.plum : PALETTE.blue;
+  const soft = tone === "green" ? PALETTE.greenSoft : tone === "amber" ? PALETTE.amberSoft : tone === "rust" ? PALETTE.rustSoft : tone === "plum" ? PALETTE.plumSoft : PALETTE.blueSoft;
+  const line = "#8E7F71";
+
+  if (kind === "baby") {
+    return (
+      <svg viewBox="0 0 320 180" className="h-full w-full" aria-hidden="true">
+        <rect x="0" y="0" width="320" height="180" rx="24" fill={soft} />
+        <rect x="22" y="22" width="276" height="136" rx="22" fill="#FFFDF8" stroke="#E7DDCF" />
+        <circle cx="74" cy="66" r="23" fill="#F5D7C5" />
+        <path d="M57 66c4-19 31-22 36 0" fill="#6C4F3E" />
+        <circle cx="67" cy="69" r="2.2" fill="#473A31" />
+        <circle cx="81" cy="69" r="2.2" fill="#473A31" />
+        <path d="M68 78c3 3 10 3 13 0" fill="none" stroke="#A86D5B" strokeWidth="2" strokeLinecap="round" />
+        <rect x="112" y="42" width="132" height="18" rx="9" fill={soft} />
+        <rect x="112" y="71" width="96" height="14" rx="7" fill="#F3EEE5" />
+        <rect x="112" y="93" width="112" height="14" rx="7" fill="#F3EEE5" />
+        <text x="122" y="55" fill={strong} fontSize="12" fontWeight="700">David Smith</text>
+        <text x="122" y="81" fill="#665C53" fontSize="10">shared by many Canadians</text>
+        <text x="122" y="103" fill="#665C53" fontSize="10">ordinary name, ordinary child</text>
+        <rect x="34" y="122" width="228" height="14" rx="7" fill={strong} opacity="0.14" />
+        <text x="44" y="132" fill="#5B5148" fontSize="10">broader than a few visible families</text>
+      </svg>
+    );
+  }
+
+  if (kind === "plane") {
+    return (
+      <svg viewBox="0 0 320 180" className="h-full w-full" aria-hidden="true">
+        <rect x="0" y="0" width="320" height="180" rx="24" fill={soft} />
+        <rect x="18" y="18" width="284" height="144" rx="22" fill="#FFFDF8" stroke="#E7DDCF" />
+        <path d="M34 129h252" stroke="#E7DDCF" strokeWidth="2" strokeDasharray="5 6" />
+        <path d="M88 108 190 78 146 122 131 95 88 108Z" fill={strong} opacity="0.2" stroke={strong} strokeWidth="2" strokeLinejoin="round" />
+        <circle cx="145" cy="93" r="6" fill="#F5D7C5" />
+        <circle cx="158" cy="87" r="5" fill="#E9C4AF" />
+        <circle cx="170" cy="82" r="4.5" fill="#DFAE8D" />
+        <path d="M210 55c16 0 29 13 29 29" fill="none" stroke={strong} strokeWidth="3" strokeLinecap="round" />
+        <path d="M208 70c8 0 15 7 15 15" fill="none" stroke={strong} strokeWidth="2.5" strokeLinecap="round" />
+        <rect x="34" y="36" width="46" height="22" rx="11" fill={strong} opacity="0.12" />
+        <text x="46" y="50" fill={strong} fontSize="11" fontWeight="700">338 MPs</text>
+        <rect x="206" y="110" width="72" height="22" rx="11" fill={strong} opacity="0.12" />
+        <text x="220" y="124" fill={strong} fontSize="11" fontWeight="700">~2/3 wrote</text>
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 320 180" className="h-full w-full" aria-hidden="true">
+      <rect x="0" y="0" width="320" height="180" rx="24" fill={soft} />
+      <rect x="18" y="18" width="284" height="144" rx="22" fill="#FFFDF8" stroke="#E7DDCF" />
+      <circle cx="72" cy="90" r="33" fill={strong} opacity="0.12" />
+      <text x="49" y="95" fill={strong} fontSize="16" fontWeight="700">100K</text>
+      <path d="M138 108h112" stroke="#D9CEBE" strokeWidth="8" strokeLinecap="round" />
+      <path d="M150 108V80l20 12 16-22 18 16 14-10 18 32" fill="none" stroke={strong} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="149" cy="79" r="4" fill={strong} />
+      <circle cx="186" cy="70" r="4" fill={strong} />
+      <circle cx="219" cy="76" r="4" fill={strong} />
+      <rect x="40" y="126" width="74" height="18" rx="9" fill={strong} opacity="0.12" />
+      <text x="53" y="138" fill="#6A5F55" fontSize="10">Nanaimo</text>
+      <rect x="132" y="126" width="110" height="18" rx="9" fill={strong} opacity="0.12" />
+      <text x="146" y="138" fill="#6A5F55" fontSize="10">Cape Breton Island</text>
+    </svg>
+  );
+}
+
+function ExhibitCard({ item, mode }) {
+  const soft = item.tone === "green" ? PALETTE.greenSoft : item.tone === "amber" ? PALETTE.amberSoft : item.tone === "rust" ? PALETTE.rustSoft : item.tone === "plum" ? PALETTE.plumSoft : PALETTE.blueSoft;
+  const strong = item.tone === "green" ? PALETTE.green : item.tone === "amber" ? PALETTE.amber : item.tone === "rust" ? PALETTE.rust : item.tone === "plum" ? PALETTE.plum : PALETTE.blue;
+  return (
+    <div className="overflow-hidden rounded-[28px] border border-[#E3D8C8] bg-white shadow-[0_10px_24px_rgba(43,38,33,0.04)]">
+      <div className="border-b border-[#EEE4D8] px-4 py-4 sm:px-5" style={{ backgroundColor: soft }}>
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <DualLabel en={item.title.en} zh={item.title.zh} mode={mode} className="text-base font-semibold text-[#241F1A]" zhClassName="text-sm text-[#75685B]" />
+          <div className="rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]" style={{ backgroundColor: "rgba(255,255,255,0.72)", color: strong }}>SVG</div>
+        </div>
+        <div className="overflow-hidden rounded-[22px] border border-white/70 bg-white/55">
+          <div className="aspect-[16/9] w-full"><ExhibitIllustration kind={item.kind} tone={item.tone} /></div>
+        </div>
+      </div>
+      <div className="space-y-3 px-4 py-4 sm:px-5 sm:py-5">
+        <div>
+          <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#7B6C5E]">{mode === "zh" ? "示意重點" : mode === "en" ? "Visual logic" : "Visual logic · 示意重點"}</div>
+          <TextBlock copy={item.fact} mode={mode} className="text-sm leading-7 text-[#4B433C]" zhClassName="border-[#DDD2C2] text-[#5E544B]" />
+        </div>
+        <div>
+          <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#7B6C5E]">{mode === "zh" ? "閱讀用途" : mode === "en" ? "Why it helps" : "Why it helps · 閱讀用途"}</div>
+          <TextBlock copy={item.caption} mode={mode} className="text-sm leading-7 text-[#4B433C]" zhClassName="border-[#DDD2C2] text-[#5E544B]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CampaignExhibitGallery({ mode }) {
+  return (
+    <div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6">
+      <div className="mb-5 flex items-start gap-3">
+        <div className="rounded-xl bg-[#F7F0E1] p-2 text-[#B58A43]"><Icon name="spark" size={18} /></div>
+        <div>
+          <div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "Reconstructed mini exhibits" : mode === "en" ? "Reconstructed mini exhibits" : "Reconstructed mini exhibits · 重建式小型 exhibits"}</div>
+          <div className="mt-1 text-sm text-[#5E544B]">{mode === "zh" ? "這不是原案例圖片重貼，而是依照案例描述重建的 SVG 示意圖，目的在於讓讀者更快進入三個 campaign 的視覺邏輯與使用情境。" : mode === "en" ? "These are not pasted case images. They are reconstructed SVG exhibits based on the case description, designed to make the three campaign concepts easier to grasp at a glance." : "These are not pasted case images. They are reconstructed SVG exhibits based on the case description, designed to make the three campaign concepts easier to grasp at a glance.｜這不是原案例圖片重貼，而是依照案例描述重建的 SVG 示意圖，目的在於讓讀者更快進入三個 campaign 的視覺邏輯與使用情境。"}</div>
+        </div>
+      </div>
+      <div className="grid gap-5 xl:grid-cols-3">{EXHIBIT_RECONSTRUCTIONS.map((item, idx) => <ExhibitCard key={idx} item={item} mode={mode} />)}</div>
+    </div>
+  );
+}
+
 function MediaCard({ item, mode }) {
   const soft = item.color === "green" ? PALETTE.greenSoft : item.color === "rust" ? PALETTE.rustSoft : PALETTE.blueSoft;
   const strong = item.color === "green" ? PALETTE.green : item.color === "rust" ? PALETTE.rust : PALETTE.blue;
@@ -782,7 +917,7 @@ export default function NFLKCaseInfrastructure() {
                   <div className="rounded-xl bg-[#F4EEE3] p-2 text-[#745F4C]"><Icon name="menu" size={18} /></div>
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7C6F62]">NFLK</div>
-                    <div className="text-sm text-[#5F554B]">Case infrastructure v2</div>
+                    <div className="text-sm text-[#5F554B]">Case infrastructure v3</div>
                   </div>
                 </div>
                 <div className="rounded-2xl border border-[#E7DDCF] bg-[#FFFCF7] p-3">
@@ -842,7 +977,7 @@ export default function NFLKCaseInfrastructure() {
 
               <section className="mb-16 space-y-6" id="people"><SectionHeader title={{ en: "Who made the campaign work", zh: "這個 campaign 為何能運作" }} summary={{ en: "A key strength of NFLK was role clarity over time. The group started from family frustration, but eventually became a distributed advocacy system with communications, legal, bilingual outreach, and political process support.", zh: "NFLK 的重要強項之一，是角色分工會隨時間逐步清楚。它起初只是家庭困擾的集合，但後來慢慢變成具備溝通、法律、雙語外展與政治流程能力的分散式倡議系統。" }} mode={mode} /><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{PEOPLE.map((item, idx) => <PersonCard key={idx} item={item} mode={mode} />)}</div></section>
 
-              <section className="mb-16 space-y-6" id="campaigns"><SectionHeader title={{ en: "Why the guerrilla campaigns were effective", zh: "為甚麼 guerrilla campaigns 有效" }} summary={{ en: "The three campaigns did not do the same job. That is exactly why they worked together. One broadened identification, one drove political conversion, and one made scale legible.", zh: "這三個 campaign 並不是在做同一件事，而這正是它們能互補成功的原因。一個擴大認同，一個促成政治轉換，一個把規模變得可讀。" }} mode={mode} /><div className="grid gap-5 xl:grid-cols-3">{CAMPAIGN_CARDS.map((item, idx) => <CampaignCard key={idx} item={item} mode={mode} />)}</div><CampaignScoreboard mode={mode} /><div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6"><div className="mb-5 flex items-center gap-3"><div className="rounded-xl bg-[#EEF5EE] p-2 text-[#5B6D5B]"><Icon name="target" size={18} /></div><div><div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "媒體、PR、guerrilla 的組合邏輯" : mode === "en" ? "How digital, PR, and guerrilla work fit together" : "How digital, PR, and guerrilla work fit together · 媒體、PR、guerrilla 的組合邏輯"}</div><div className="text-sm text-[#5E544B]">{mode === "zh" ? "從 attention 到 political conversion 的完整路徑" : mode === "en" ? "The full path from attention to political conversion" : "The full path from attention to political conversion · 從 attention 到 political conversion 的完整路徑"}</div></div></div><div className="grid gap-4 xl:grid-cols-3">{MEDIA_LOGIC.map((item, idx) => <MediaCard key={idx} item={item} mode={mode} />)}</div></div></section>
+              <section className="mb-16 space-y-6" id="campaigns"><SectionHeader title={{ en: "Why the guerrilla campaigns were effective", zh: "為甚麼 guerrilla campaigns 有效" }} summary={{ en: "The three campaigns did not do the same job. That is exactly why they worked together. One broadened identification, one drove political conversion, and one made scale legible.", zh: "這三個 campaign 並不是在做同一件事，而這正是它們能互補成功的原因。一個擴大認同，一個促成政治轉換，一個把規模變得可讀。" }} mode={mode} /><CampaignExhibitGallery mode={mode} /><div className="grid gap-5 xl:grid-cols-3">{CAMPAIGN_CARDS.map((item, idx) => <CampaignCard key={idx} item={item} mode={mode} />)}</div><CampaignScoreboard mode={mode} /><div className="rounded-[28px] border border-[#E2D8CA] bg-white p-5 sm:p-6"><div className="mb-5 flex items-center gap-3"><div className="rounded-xl bg-[#EEF5EE] p-2 text-[#5B6D5B]"><Icon name="target" size={18} /></div><div><div className="text-lg font-semibold text-[#241F1A]">{mode === "zh" ? "媒體、PR、guerrilla 的組合邏輯" : mode === "en" ? "How digital, PR, and guerrilla work fit together" : "How digital, PR, and guerrilla work fit together · 媒體、PR、guerrilla 的組合邏輯"}</div><div className="text-sm text-[#5E544B]">{mode === "zh" ? "從 attention 到 political conversion 的完整路徑" : mode === "en" ? "The full path from attention to political conversion" : "The full path from attention to political conversion · 從 attention 到 political conversion 的完整路徑"}</div></div></div><div className="grid gap-4 xl:grid-cols-3">{MEDIA_LOGIC.map((item, idx) => <MediaCard key={idx} item={item} mode={mode} />)}</div></div></section>
 
               <section className="mb-16 space-y-6" id="government"><SectionHeader title={{ en: "How to assess the government fairly", zh: "如何公平評估政府角色" }} summary={{ en: "A strong answer is balanced. The government did move, but NFLK’s persistent outside pressure was what made the issue hard to ignore and costly to defer.", zh: "這一題要答得好，關鍵在平衡。政府確實有動，但真正讓這個議題難以被忽略、難以再延後的，是 NFLK 持續不斷的制度外施壓。" }} mode={mode} /><GovernmentTable mode={mode} /><ImplementationDashboard mode={mode} /><div className="rounded-2xl border border-[#E3D8C8] bg-[#FBF7EE] p-5"><div className="mb-3 text-base font-semibold text-[#241F1A]">{mode === "zh" ? "最穩的總結" : mode === "en" ? "Most defensible conclusion" : "Most defensible conclusion · 最穩的總結"}</div><TextBlock copy={{ en: "Government action mattered, but the 2018 result was best understood as the interaction of inside pressure and outside pressure. NFLK did not replace the state. It made inaction harder.", zh: "政府行動確實重要，但 2018 年的結果，最適合被理解為制度內壓力與制度外壓力的交互作用。NFLK 不是取代政府，而是讓政府更難不作為。" }} mode={mode} className="text-sm leading-7 text-[#4A423A]" zhClassName="border-[#DDD2C2] text-[#5B5148]" /></div></section>
 
