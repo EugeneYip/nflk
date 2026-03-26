@@ -1,4 +1,3 @@
-
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const PALETTE = {
@@ -546,7 +545,6 @@ function StatCard({ item, mode }) {
           <TextBlock copy={item.label} mode={mode} className="mt-1 text-sm leading-6 text-[#5B5148]" zhClassName="border-[#E3D8C8] text-[#695E55]" />
         </div>
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -561,7 +559,6 @@ function BoundaryCard({ item, mode }) {
           <TextBlock copy={item.body} mode={mode} className="text-sm leading-7 text-[#514840]" zhClassName="border-[#E3D8C8] text-[#62574E]" />
         </div>
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -577,7 +574,6 @@ function DecisionItem({ item, mode }) {
           <TextBlock copy={item.body} mode={mode} className="text-[15px] leading-7 text-[#433B34]" zhClassName="border-[#DDD2C2] text-[#5B5148]" />
         </div>
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -594,7 +590,6 @@ function TimelineRow({ item, mode }) {
         <div className="mb-2 text-base font-semibold text-[#2C2824]">{mode === "en" ? item.rightTitle.en : mode === "zh" ? item.rightTitle.zh : item.rightTitle.en}</div>
         <TextBlock copy={item.rightBody} mode={mode} className="text-sm leading-7 text-[#4E453D]" zhClassName="border-[#D7DEE5] text-[#5E544B]" />
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -626,7 +621,6 @@ function CompareCard({ item, mode }) {
           <TextBlock copy={item.limit} mode={mode} className="text-sm leading-7 text-[#664A42]" zhClassName="border-[#E8D4CE] text-[#74564C]" />
         </div>
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -641,7 +635,6 @@ function PersonCard({ item, mode }) {
           <TextBlock copy={item.role} mode={mode} className="text-sm leading-7 text-[#4D453E]" zhClassName="border-[#DDD2C2] text-[#5E544B]" />
         </div>
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -667,7 +660,6 @@ function CampaignCard({ item, mode }) {
           </div>
         ))}
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -764,7 +756,6 @@ function ExhibitCard({ item, mode }) {
           <TextBlock copy={item.caption} mode={mode} className="text-sm leading-7 text-[#4B433C]" zhClassName="border-[#DDD2C2] text-[#5E544B]" />
         </div>
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -815,7 +806,6 @@ function GovernmentTable({ mode }) {
           </div>
         ))}
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -829,7 +819,6 @@ function MissedPoint({ item, mode }) {
           <div className="space-y-2"><div className="text-sm leading-7 text-[#433B34]">{item.en}</div><div className="border-l-2 border-[#DDD2C2] pl-3 text-sm leading-7 text-[#5D534A]">{item.zh}</div></div>
         ) : <div className="text-sm leading-7 text-[#433B34]">{mode === "en" ? item.en : item.zh}</div>}
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -889,7 +878,6 @@ function MobileJumpNav({ items, activeId, onClick, mode }) {
           );
         })}
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -970,7 +958,6 @@ function RailSummary({ activeId, mode }) {
       <div className="mt-3">
         <TextBlock copy={note} mode={mode} className="text-sm leading-7 text-[#5B5148]" zhClassName="border-[#DDD2C2] text-[#675D54]" />
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -987,7 +974,6 @@ function ReadingPathCard({ mode }) {
           </div>
         ))}
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -1035,7 +1021,6 @@ function CampaignScoreboard({ mode }) {
           </div>
         ))}
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
@@ -1129,7 +1114,6 @@ function StickySummaryStrip({ activeId, mode, navItems }) {
           </div>
         </div>
       </div>
-      <FloatingLanguageDock mode={mode} setMode={setMode} open={langOpen} setOpen={setLangOpen} dockRef={dockRef} buttons={langButtons} />
     </div>
   );
 }
